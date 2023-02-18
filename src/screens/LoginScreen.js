@@ -1,22 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
 
 import LogoImage from '../assets/images/Logo.png';
 import LoginButton from '../components/LoginButton';
 import InputForm from '../components/InputForm';
 import GoogleLoginButton from '../components/GoogleLoginButton';
-import LoadingScreen from './LoadingScreen';
 
 const LoginScreen = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
-
-  return loading ? (<LoadingScreen/>) : (
+  return (
     <View style={styles.contianer}>
       <SafeAreaView
         style={{
