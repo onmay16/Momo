@@ -1,12 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const LoginButton = () => {
-	return(
+	const dispatch = useDispatch();
+
+	function testLogin() {
+		dispatch({ type: 'user/login', payload: 'User logged in.' });
+	}
+
+	return (
 		<View>
 			<TouchableOpacity
 				style={styles.button}
-				onPress={()=>alert('Login')}
+				onPress={testLogin}
 			>
 				<Text
 					style={styles.text}
@@ -15,8 +22,8 @@ const LoginButton = () => {
 				</Text>
 			</TouchableOpacity>
 		</View>
-	)
-}
+	);
+};
 
 
 const styles = StyleSheet.create({
@@ -26,11 +33,11 @@ const styles = StyleSheet.create({
 		height: 56,
 		borderRadius: 12,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	text: {
-		fontSize: 14
-	}
+		fontSize: 14,
+	},
 });
 
 export default LoginButton;
