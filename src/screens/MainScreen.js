@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Text, View } from 'react-native';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { logout } from '../redux/reducerSlices/userSlice';
 
 const MainScreen = () => {
     const dispatch = useDispatch();
 
     function testLogout() {
-        dispatch({ type: 'user/logout', payload: 'User logged out.' });
+        dispatch(logout());
     }
 
     return (
