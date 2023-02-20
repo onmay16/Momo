@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { login } from '../redux/reducerSlices/userSlice';
 
 const LoginButton = () => {
 	const dispatch = useDispatch();
 
 	function testLogin() {
-		dispatch({ type: 'user/login', payload: 'User logged in.' });
+		dispatch(login());
 	}
 
 	return (
@@ -24,7 +25,6 @@ const LoginButton = () => {
 		</View>
 	);
 };
-
 
 const styles = StyleSheet.create({
 	button: {
