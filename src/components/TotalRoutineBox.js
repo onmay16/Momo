@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Image, View, Text} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import TimerImage from '../assets/images/Timer.png';
 
@@ -51,8 +52,14 @@ const RoutineAddButton = props => {
 
           <View style={{flex: 1, paddingRight: 25}}>
              <Image source={TimerImage} />
+             <View style={{position: 'absolute', bottom: 10, right: 20}}>
+              <TouchableOpacity>
+                <Text style={{fontWeight: '600', fontSize: 12}}>
+                  수정하기 >
+                </Text>
+              </TouchableOpacity>
+             </View>
           </View>
-          
         </View>
       </View>
     </View>
