@@ -23,7 +23,6 @@ import ClosetFocused from '../assets/icons/light/closet_focused.png';
 import Settings from '../assets/icons/light/settings.png';
 import SettingsFocused from '../assets/icons/light/settings_focused.png';
 
-
 const AuthStack = createStackNavigator();
 const MainScreenTab = createBottomTabNavigator();
 
