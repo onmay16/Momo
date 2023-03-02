@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import LoginScreen from '../screens/LoginScreen';
-import MainScreen from '../screens/MainScreen';
+import LoginScreen from '../screens/LoginScreen'
+// import MainScreen from '../screens/MainScreen'
 // import MomoScreen from '../screens/MomoScreen';
 
 const AuthStack = createStackNavigator();
