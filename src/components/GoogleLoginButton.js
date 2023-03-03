@@ -1,18 +1,18 @@
-import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import React from "react";
+import { View, TouchableOpacity, Image } from "react-native";
 
 const GoogleLoginButton = () => {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => alert('Google Login')}
+        onPress={() => alert("Google Login")}
       >
         <Image
-          source={require('../assets/images/Google.png')}
+          source={require("../assets/images/google.png")}
         />
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 export default GoogleLoginButton;
