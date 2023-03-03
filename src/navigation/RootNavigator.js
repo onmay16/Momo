@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
@@ -21,18 +21,14 @@ const TabComponent = () => {
 };
 
 export const RootNavigator = () => {
-  const isAuthUser = useSelector((state) => state.user.signedIn);
+  const isAuthUser = useSelector(state => state.user.signedIn);
   return (
-    <AuthStack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
+    <AuthStack.Navigator screenOptions={{headerShown: false}}>
       {isAuthUser ? (
         <AuthStack.Screen name="Main" component={TabComponent} />
       ) : (
         <AuthStack.Screen name="Login" component={LoginScreen} />
-      )
-      }
-
+      )}
     </AuthStack.Navigator>
   );
 };
