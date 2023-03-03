@@ -7,7 +7,7 @@ import PretendardedText from "../CustomComponent/PretendardedText";
 //TO-DO: replace momo.png with sleeping momo gif
 import sleepingMomo from "../../assets/character/momo.png";
 
-const InactiveMain = (props) => {
+export const InactiveMain = (props) => {
   const opacity = useRef(new Animated.Value(1)).current;
   useEffect(() => {
   }, []);
@@ -45,13 +45,40 @@ const InactiveMain = (props) => {
   );
 };
 
-export default InactiveMain;
-
 const styles = StyleSheet.create({
-  activateBtn: { alignItems: "center", justifyContent: "center", marginBottom: 22 },
-  activateBtnShadow: { shadowColor: "#3CE3AC", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.5, elevation: 9, backgroundColor: "none" },
-  linearGradient: { alignItems: "center", justifyContent: "center", borderRadius: 12, height: 90, width: "90%" },
-  activateText: { fontWeight: 700, fontSize: 16, color: "white" },
-  todayRoutine: { fontWeight: 600, fontSize: 16, marginLeft: 30, marginBottom: 14 },
-  momo: { flex: this.momoActivated ? (Platform.OS === "ios" ? 1 : 0.5) : (Platform.OS === "ios" ? 4 : 3), justifyContent: "center", alignItems: "center" },
+  activateBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 22
+  },
+  activateBtnShadow: {
+    shadowColor: "#3CE3AC",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    elevation: 9,
+    backgroundColor: "none"
+  },
+  linearGradient: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    height: 90,
+    width: "90%"
+  },
+  activateText: {
+    fontWeight: 700,
+    fontSize: 16,
+    color: "white"
+  },
+  todayRoutine: {
+    fontWeight: 600,
+    fontSize: 16,
+    marginLeft: 30,
+    marginBottom: 14
+  },
+  momo: {
+    flex: this.momoActivated ? (Platform.OS === "ios" ? 1 : 0.5) : (Platform.OS === "ios" ? 4 : 3),
+    justifyContent: "center",
+    alignItems: "center"
+  },
 });

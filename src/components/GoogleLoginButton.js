@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Image } from "react-native";
 
-const GoogleLoginButton = () => {
+export const GoogleLoginButton = () => {
   return (
     <View>
       <TouchableOpacity
@@ -14,5 +14,3 @@ const GoogleLoginButton = () => {
     </View>
   );
 };
-
-export default GoogleLoginButton;

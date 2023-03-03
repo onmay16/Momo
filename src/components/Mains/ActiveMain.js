@@ -10,7 +10,7 @@ import activeMomo from "../../assets/character/momo.png";
 import currentPointFire from "../../assets/images/currentPointFire.png";
 import remainingPointFire from "../../assets/images/remainingPointFire.png";
 
-const ActiveMain = (props) => {
+export const ActiveMain = (props) => {
 
   function calculateDuration(array) {
     const total = array.reduce((accumulator, object) => {
@@ -113,20 +113,73 @@ const ActiveMain = (props) => {
   );
 };
 
-export default ActiveMain;
-
 const styles = StyleSheet.create({
-  container: { flex: 6, marginLeft: 30, marginRight: 30 },
-  progressArea: { flex: 1, marginRight: 39, marginLeft: 39, marginBottom: 29 },
-  momo: { flex: this.momoActivated ? (Platform.OS === "ios" ? 1 : 0.5) : (Platform.OS === "ios" ? 4 : 3), justifyContent: "center", alignItems: "center" },
-  currentPointContainer: { flexDirection: "row", marginBottom: 3, alignItems: "center" },
-  currentPoint: { fontWeight: 700, fontSize: 14, color: "#FF6056", marginRight: 2 },
-  remainingPointContainer: { flexDirection: "row", marginTop: 3, alignItems: "center", justifyContent: "flex-end" },
-  todayRoutineContainer: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 },
-  todayRoutine: { fontWeight: 600, fontSize: 16, color: "#4C4C4C" },
-  remainingTimeContainer: { flexDirection: "row", alignItems: "center" },
-  remainingTimeText: { fontSize: 14, color: "#808080", fontWeight: 500 },
-  remainingTime: { fontSize: 14, color: "#3CE3AC", fontWeight: 600 },
-  remainingPoint: { fontWeight: 400, fontSize: 12, color: "#B3B3B3" },
-  actionsList: { flex: 1, alignItems: "center", justifyContent: "center" },
+  container: { 
+    flex: 6, 
+    marginLeft: 30, 
+    marginRight: 30
+  },
+  progressArea: {
+    flex: 1, 
+    marginRight: 39, 
+    marginLeft: 39, 
+    marginBottom: 29
+  },
+  momo: {
+    flex: this.momoActivated ? (Platform.OS === "ios" ? 1 : 0.5) : (Platform.OS === "ios" ? 4 : 3), 
+    justifyContent: "center", 
+    alignItems: "center" 
+  },
+  currentPointContainer: {
+    flexDirection: "row",
+    marginBottom: 3,
+    alignItems: "center"
+  },
+  currentPoint: {
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#FF6056",
+    marginRight: 2
+  },
+  remainingPointContainer: {
+    flexDirection: "row",
+    marginTop: 3,
+    alignItems: "center",
+    justifyContent: "flex-end"
+  },
+  todayRoutineContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 14
+  },
+  todayRoutine: {
+    fontWeight: 600,
+    fontSize: 16,
+    color: "#4C4C4C"
+  },
+  remainingTimeContainer: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  remainingTimeText: {
+    fontSize: 14,
+    color: "#808080",
+    fontWeight: 500
+  },
+  remainingTime: {
+    fontSize: 14,
+    color: "#3CE3AC",
+    fontWeight: 600
+  },
+  remainingPoint: {
+    fontWeight: 400,
+    fontSize: 12,
+    color: "#B3B3B3"
+  },
+  actionsList: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
 });
