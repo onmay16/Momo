@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 import { Image, Platform } from "react-native";
+import { useSelector } from 'react-redux';
 
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginScreen from "../screens/LoginScreen";
 import MainScreen from "../screens/MainScreen";
@@ -99,6 +100,7 @@ const TabComponent = () => {
 };
 
 export const RootNavigator = () => {
+  const isAuthUser = useSelector((state) => state.user.signedIn);
   return (
     <AuthStack.Navigator
       screenOptions={{ headerShown: false }}
