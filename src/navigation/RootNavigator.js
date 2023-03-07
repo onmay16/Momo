@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
-import RoutineScreen from '../screens/RoutineScreen';
+import RoutineEditScreen from '../screens/RoutineEditScreen';
 import ChallengeScreen from '../screens/ChallengeScreen';
 import ClosetScreen from '../screens/ClosetScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -60,7 +60,7 @@ const TabComponent = () => {
         }} />
       <MainScreenTab.Screen
         name="Routine"
-        component={RoutineScreen}
+        component={RoutineEditScreen}
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
