@@ -4,11 +4,14 @@ import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import ActionBox from '../components/ActionBox';
 import RoutineAddButton from '../components/RoutineAddButton';
 import TotalRoutineBox from '../components/TotalRoutineBox';
+import { PopUpModal } from '../components/PopUpModal';
 
 import { RoutineAddModal } from '../components/RoutineAddModal';
 import { RoutineAddListModal } from '../components/RoutineAddList/RoutineAddListModal';
 
 const RoutineScreen = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const [state, setState] = useState({
     totalRoutineTime: 30,
     wakeUpTime: '08:20',
@@ -50,6 +53,7 @@ const RoutineScreen = () => {
           <RoutineAddModal/>
           <RoutineAddListModal isTutorial={false}/>
         </View>
+        <PopUpModal visible={isModalVisible} setVisible={setIsModalVisible} type={'addRoutineModal'} />
       </SafeAreaView>
     </View>
   );
