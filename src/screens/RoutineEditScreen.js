@@ -4,6 +4,8 @@ import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
 import ActionBox from '../components/ActionBox';
 import RoutineAddButton from '../components/RoutineAddButton';
 import TotalRoutineBox from '../components/TotalRoutineBox';
+import { DescriptionTypeModal } from '../components/Modals/DescriptionTypeModal';
+import { PairTypeModal } from '../components/Modals/PairTypeModal';
 import { PopUpModal } from '../components/PopUpModal';
 
 import { RoutineAddModal } from '../components/RoutineAddModal';
@@ -53,7 +55,8 @@ const RoutineScreen = () => {
           <RoutineAddModal/>
           <RoutineAddListModal isTutorial={false}/>
         </View>
-        <PopUpModal visible={isModalVisible} setVisible={setIsModalVisible} type={'addRoutineModal'} />
+        {/* <PairTypeModal visible={isModalVisible} setVisible={setIsModalVisible} type={'editRoutineModal'}/> */}
+        <DescriptionTypeModal visible={isModalVisible} setVisible={setIsModalVisible} type={'overTimeModal'}/>
       </SafeAreaView>
     </View>
   );
