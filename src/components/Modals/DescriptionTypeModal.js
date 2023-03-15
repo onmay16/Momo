@@ -54,7 +54,7 @@ export const DescriptionTypeModal = (props) => {
             <View>
               <Text style={styles.description}>{currentModalState.description1}</Text>
               <Text style={[styles.boldText, styles.description]}>
-                {delayedTime + currentModalState.boldText}
+                {props.type === 'overTimeModal' ?  delayedTime + currentModalState.boldText : currentModalState.boldText}
                 <Text style={styles.description}>{currentModalState.description2}</Text>
               </Text>
             </View>
