@@ -1,4 +1,4 @@
-import { StyleSheet, Modal, View, Pressable, Text } from 'react-native';
+import { StyleSheet, Modal, View, Pressable, Text, TouchableWithoutFeedback } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
 import PretendardedText from '../CustomComponent/PretendardedText';
@@ -44,31 +44,35 @@ export const DescriptionTypeModal = (props) => {
       transparent={true}
       visible={props.visible}
     >
-      <View style={styles.container}>
-        <View style={styles.modalView}>
-          <PretendardedText style={styles.title}>{currentModalState.title}</PretendardedText>
-          {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : <PhotoVer style={styles.image} />}
-          <View>
-            <Text style={styles.description}>{currentModalState.description1}</Text>
-            <Text style={[styles.boldText, styles.description]}>
-              {delayedTime + currentModalState.boldText}
-              <Text style={styles.description}>{currentModalState.description2}</Text>
-            </Text>
+      <Pressable
+        style={styles.container}
+        onPressOut={() => props.setVisible(false)}>
+        <TouchableWithoutFeedback>
+          <View style={styles.modalView}>
+            <PretendardedText style={styles.title}>{currentModalState.title}</PretendardedText>
+            {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : <PhotoVer style={styles.image} />}
+            <View>
+              <Text style={styles.description}>{currentModalState.description1}</Text>
+              <Text style={[styles.boldText, styles.description]}>
+                {delayedTime + currentModalState.boldText}
+                <Text style={styles.description}>{currentModalState.description2}</Text>
+              </Text>
+            </View>
+            <View style={styles.buttons}>
+              <Pressable
+                style={[styles.button, customSytles(currentModalState.hasCancel).leftButton]}
+                onPress={() => props.setVisible(false)}>
+                <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>{currentModalState.leftButtonText}</PretendardedText>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.rightButton]}
+                onPress={() => props.setVisible(false)}>
+                <PretendardedText style={styles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
+              </Pressable>
+            </View>
           </View>
-          <View style={styles.buttons}>
-            <Pressable
-              style={[styles.button, customSytles(currentModalState.hasCancel).leftButton]}
-              onPress={() => props.setVisible(false)}>
-              <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>{currentModalState.leftButtonText}</PretendardedText>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.rightButton]}
-              onPress={() => props.setVisible(false)}>
-              <PretendardedText style={styles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
-            </Pressable>
-          </View>
-        </View>
-      </View>
+        </TouchableWithoutFeedback>
+      </Pressable>
     </Modal>
   );
 };
