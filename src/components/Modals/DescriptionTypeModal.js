@@ -1,6 +1,8 @@
 import { StyleSheet, Modal, View, Pressable, Text, TouchableWithoutFeedback } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
+import { modalStyles } from "../../styles";
+
 import PretendardedText from '../CustomComponent/PretendardedText';
 
 import OverTime from '../../assets/images/modals/overTime.svg';
@@ -45,11 +47,11 @@ export const DescriptionTypeModal = (props) => {
       visible={props.visible}
     >
       <Pressable
-        style={styles.container}
+        style={modalStyles.container}
         onPressOut={() => props.setVisible(false)}>
         <TouchableWithoutFeedback>
-          <View style={styles.modalView}>
-            <PretendardedText style={styles.title}>{currentModalState.title}</PretendardedText>
+          <View style={modalStyles.modalView}>
+            <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
             {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : <PhotoVer style={styles.image} />}
             <View>
               <Text style={styles.description}>{currentModalState.description1}</Text>
@@ -58,16 +60,16 @@ export const DescriptionTypeModal = (props) => {
                 <Text style={styles.description}>{currentModalState.description2}</Text>
               </Text>
             </View>
-            <View style={styles.buttons}>
+            <View style={modalStyles.buttons}>
               <Pressable
-                style={[styles.button, customSytles(currentModalState.hasCancel).leftButton]}
+                style={[modalStyles.button, customSytles(currentModalState.hasCancel).leftButton]}
                 onPress={() => props.setVisible(false)}>
                 <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>{currentModalState.leftButtonText}</PretendardedText>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.rightButton]}
+                style={[modalStyles.button, modalStyles.rightButton]}
                 onPress={() => props.setVisible(false)}>
-                <PretendardedText style={styles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
+                <PretendardedText style={modalStyles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
           </View>
@@ -99,7 +101,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#222222',
     marginTop: 30,
-    // marginBottom: 10,
   },
   image: {
     marginTop: 10,
