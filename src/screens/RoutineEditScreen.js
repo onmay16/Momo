@@ -6,7 +6,6 @@ import RoutineAddButton from '../components/RoutineAddButton';
 import TotalRoutineBox from '../components/TotalRoutineBox';
 import { DescriptionTypeModal } from '../components/Modals/DescriptionTypeModal';
 import { PairTypeModal } from '../components/Modals/PairTypeModal';
-import { PopUpModal } from '../components/PopUpModal';
 
 import { RoutineAddModal } from '../components/RoutineAddModal';
 import { RoutineAddListModal } from '../components/RoutineAddList/RoutineAddListModal';
