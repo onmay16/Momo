@@ -1,16 +1,17 @@
 import { StyleSheet, View, Image, Platform, Pressable, Animated } from 'react-native';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 import PretendardedText from '../CustomComponent/PretendardedText';
+import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
 
 //TO-DO: replace momo.png with sleeping momo gif
 import sleepingMomo from '../../assets/character/momo.png';
 
 const InactiveMain = (props) => {
     const opacity = useRef(new Animated.Value(1)).current;
-    useEffect(() => {
-    }, []);
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     function activateMomo() {
         if (!props.momoActivated) {
@@ -33,7 +34,7 @@ const InactiveMain = (props) => {
                 <PretendardedText style={styles.todayRoutine}>오늘의 루틴</PretendardedText>
                 <Pressable
                     style={[styles.activateBtn, styles.activateBtnShadow]}
-                    onPress={activateMomo}>
+                    onPress={() => setIsModalVisible(true)}>
                     <LinearGradient
                         colors={['#3CE3AC', '#32CACA']}
                         style={[styles.linearGradient, styles.activateBtnShadow]}>
@@ -41,6 +42,7 @@ const InactiveMain = (props) => {
                     </LinearGradient>
                 </Pressable>
             </Animated.View>
+            <DescriptionTypeModal visible={isModalVisible} setVisible={setIsModalVisible} type={'routineStartModal'} rightButtonAction={activateMomo}/>
         </View>
     );
 };
