@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View, Pressable } from "react-native";
+import { Modal, StyleSheet, View, Pressable, TouchableWithoutFeedback } from "react-native";
 import React, { useState, useEffect } from 'react';
 
 import { modalStyles } from "../../styles";
@@ -7,7 +7,7 @@ import PretendardedText from '../CustomComponent/PretendardedText';
 
 import AddRoutine from '../../assets/images/modals/addRoutine.svg';
 import DeleteRoutine from '../../assets/images/modals/deleteRoutine.svg';
-import EditRoutine from '../../assets/images/action_img.svg';
+import EditRoutine from '../../assets/images/modals/editRoutine.svg';
 
 export const PairTypeModal = (props) => {
 
@@ -55,29 +55,33 @@ export const PairTypeModal = (props) => {
       transparent={true}
       visible={props.visible}
     >
-      <View style={modalStyles.container}>
-        <View style={modalStyles.modalView}>
-          <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
-          {props.type === 'addRoutineModal' ? <AddRoutine style={styles.image} /> : (props.type === 'deleteRoutineModal' ? <DeleteRoutine style={styles.image}/> : <EditRoutine style={styles.image}/>)}
-          <View>
-            {modalPairs.map((pair) => {
-              return renderKeyValues(pair.key, pair.value);
-            })}
+      <Pressable
+        style={modalStyles.container}
+        onPressOut={() => props.setVisible(false)}>
+        <TouchableWithoutFeedback>
+          <View style={modalStyles.modalView}>
+            <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
+            {props.type === 'addRoutineModal' ? <AddRoutine style={styles.image} /> : (props.type === 'deleteRoutineModal' ? <DeleteRoutine style={styles.image} /> : <EditRoutine style={styles.image} />)}
+            <View>
+              {modalPairs.map((pair) => {
+                return renderKeyValues(pair.key, pair.value);
+              })}
+            </View>
+            <View style={modalStyles.buttons}>
+              <Pressable
+                style={[modalStyles.button, customSytles(currentModalState.hasCancel).leftButton]}
+                onPress={() => props.setVisible(false)}>
+                <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>취소</PretendardedText>
+              </Pressable>
+              <Pressable
+                style={[modalStyles.button, modalStyles.rightButton]}
+                onPress={() => props.setVisible(false)}>
+                <PretendardedText style={modalStyles.buttonText}>확인</PretendardedText>
+              </Pressable>
+            </View>
           </View>
-          <View style={modalStyles.buttons}>
-            <Pressable
-              style={[modalStyles.button, customSytles(currentModalState.hasCancel).leftButton]}
-              onPress={() => props.setVisible(false)}>
-              <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>취소</PretendardedText>
-            </Pressable>
-            <Pressable
-              style={[modalStyles.button, modalStyles.rightButton]}
-              onPress={() => props.setVisible(false)}>
-              <PretendardedText style={modalStyles.buttonText}>확인</PretendardedText>
-            </Pressable>
-          </View>
-        </View>
-      </View>
+          </TouchableWithoutFeedback>
+      </Pressable>
     </Modal>
   );
 };
