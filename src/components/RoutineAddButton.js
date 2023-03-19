@@ -1,15 +1,19 @@
-import React from 'react';
-import {StyleSheet, Image, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import {StyleSheet, Image, View, Pressable} from 'react-native';
+
+import { RoutineAddModal } from './RoutineAddModal';
 
 import AddButton from '../assets/images/add.png';
 
 const RoutineAddButton = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   return (
     <View style={styles.container} >
-      <TouchableOpacity onPress={() => alert('Routine Add Button')}>
+      <Pressable onPress={() => setIsModalVisible(true)}>
         <Image source={AddButton}/>
-      </TouchableOpacity>
+      </Pressable>
+      <RoutineAddModal visible={isModalVisible} setVisible={setIsModalVisible}/>
     </View>
   );
 };
