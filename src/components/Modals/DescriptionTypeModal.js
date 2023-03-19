@@ -7,6 +7,7 @@ import PretendardedText from '../CustomComponent/PretendardedText';
 
 import OverTime from '../../assets/images/modals/overTime.svg';
 import PhotoVer from '../../assets/images/modals/photoVer.svg';
+import StartRoutine from '../../assets/images/modals/startRoutine.svg';
 
 export const DescriptionTypeModal = (props) => {
 
@@ -28,6 +29,15 @@ export const DescriptionTypeModal = (props) => {
     rightButtonText: '좋아요!',
     hasCancel: true,
   };
+  const routineStartModal = {
+    title: '루틴을 시작할까요?',
+    description1: '오늘 하를 시작할\n준비가 되었다면',
+    boldText: '모모를 깨워 루틴을 시작합시다!',
+    description2: '',
+    leftButtonText: '괜찮아요.',
+    rightButtonText: '좋아요!',
+    hasCancel: true,
+  };
 
   const [currentModalState, setCurrentModalState] = useState({});
   const [delayedTime, setDelayedTime] = useState(10);
@@ -35,9 +45,11 @@ export const DescriptionTypeModal = (props) => {
   useEffect(() => {
     if (props.type === 'overTimeModal') {
       setCurrentModalState(overTimeModal);
-    } else {
+    } else if (props.type === 'photoModal') {
       setCurrentModalState(photoModal);
-    }
+    } else {
+      setCurrentModalState(routineStartModal);
+    };
   }, []);
 
   return (
@@ -52,12 +64,12 @@ export const DescriptionTypeModal = (props) => {
         <TouchableWithoutFeedback>
           <View style={modalStyles.modalView}>
             <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
-            {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : <PhotoVer style={styles.image} />}
+            {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : (props.type === 'photoModal' ? <PhotoVer style={styles.image} /> : <StartRoutine style={styles.image}/>)}
             <View>
               <Text style={styles.description}>{currentModalState.description1}</Text>
               <Text style={[styles.boldText, styles.description]}>
                 {props.type === 'overTimeModal' ?  delayedTime + currentModalState.boldText : currentModalState.boldText}
-                <Text style={styles.description}>{currentModalState.description2}</Text>
+                {currentModalState.description2 !== null ? <Text style={styles.description}>{currentModalState.description2}</Text> : <Text/>}
               </Text>
             </View>
             <View style={modalStyles.buttons}>
@@ -68,7 +80,7 @@ export const DescriptionTypeModal = (props) => {
               </Pressable>
               <Pressable
                 style={[modalStyles.button, modalStyles.rightButton]}
-                onPress={() => props.setVisible(false)}>
+                onPress={props.rightButtonAction ? props.rightButtonAction : () => props.setVisible(false)}>
                 <PretendardedText style={modalStyles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
