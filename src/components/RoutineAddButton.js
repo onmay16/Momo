@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {StyleSheet, Image, View, Pressable} from 'react-native';
+import { useDispatch } from 'react-redux';
 
-import { RoutineAddModal } from './RoutineAddModal';
+import { openRoutineAddModal } from '../redux/reducerSlices/modalSlice';
 
 import AddButton from '../assets/images/add.png';
 
 const RoutineAddButton = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  function handleModal(action) {
+    dispatch(action());
+  }
 
   return (
     <View style={styles.container} >
-      <Pressable onPress={() => setIsModalVisible(true)}>
+      <Pressable onPress={() => handleModal(openRoutineAddModal)}>
         <Image source={AddButton}/>
       </Pressable>
-      <RoutineAddModal visible={isModalVisible} setVisible={setIsModalVisible}/>
     </View>
   );
 };
