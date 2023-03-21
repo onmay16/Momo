@@ -1,22 +1,32 @@
 import { Pressable, StyleSheet, TouchableWithoutFeedback, View, Modal, Text } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { closeRoutineAddModal, openRoutineAddListModal } from '../redux/reducerSlices/modalSlice';
 
 import PretendardedText from './CustomComponent/PretendardedText';
 
-import { RoutineAddList } from './RoutineAddList/RoutineAddList';
+export const RoutineAddModal = () => {
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modal);
 
-export const RoutineAddModal = (props) => {
-  const [routineListVisible, setRoutineListVisible] = useState(false);
-  
+  function handleModal(action) {
+    dispatch(action());
+  }
+
+  function handleModalCombo() {
+    handleModal(closeRoutineAddModal);
+    setTimeout(() => handleModal(openRoutineAddListModal), 500);
+  }
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={props.visible}>
+      visible={modalState.routineAddModal}>
       <Pressable
         style={styles.container}
-        onPressOut={() => props.setVisible(false)}>
+        onPressOut={() => handleModal(closeRoutineAddModal)}>
         <TouchableWithoutFeedback>
           <View style={styles.modalView}>
             <View style={styles.titleView}>
@@ -46,10 +56,9 @@ export const RoutineAddModal = (props) => {
             </View>
             <Pressable
               style={styles.nextButton}
-              onPress={() => setRoutineListVisible(true)}>
+              onPress={handleModalCombo}>
               <PretendardedText style={styles.nextButtonText}>다음</PretendardedText>
             </Pressable>
-            <RoutineAddList visible={routineListVisible} setVisible={setRoutineListVisible}/>
           </View>
         </TouchableWithoutFeedback>
       </Pressable>
@@ -159,6 +168,6 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     fontWeight: 700,
-    fontSize: 20
+    fontSize: 20,
   },
 });

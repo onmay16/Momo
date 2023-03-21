@@ -5,6 +5,9 @@ import ActionBox from '../components/ActionBox';
 import RoutineAddButton from '../components/RoutineAddButton';
 import TotalRoutineBox from '../components/TotalRoutineBox';
 
+import { RoutineAddModal } from '../components/RoutineAddModal';
+import { RoutineAddListModal } from '../components/RoutineAddList/RoutineAddListModal';
+
 const RoutineScreen = () => {
   const [state, setState] = useState({
     totalRoutineTime: 30,
@@ -43,7 +46,9 @@ const RoutineScreen = () => {
           <ScrollView width="100%" showsVerticalScrollIndicator={false}>
             {actionList.map(action => renderActionList(action))}
           </ScrollView>
-          <RoutineAddButton />
+          <RoutineAddButton/>
+          <RoutineAddModal/>
+          <RoutineAddListModal/>
         </View>
       </SafeAreaView>
     </View>
