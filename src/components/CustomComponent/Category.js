@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderColor: '#EEEEEE',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '2.5%',
   },
 });
 
