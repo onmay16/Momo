@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View, Pressable, Modal, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Pressable, Modal, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import globalStyles from '../../styles';
 
 import { closeRoutineAddListModal } from '../../redux/reducerSlices/modalSlice';
 
 import PretendardedText from '../CustomComponent/PretendardedText';
 import { CategoryRoutineList } from './CategoryRoutineList';
+import { ButtonBottom } from '../Buttons/ButtonBottom';
 
 import BackIcon from '../../assets/icons/light/backIcon.svg';
+import BackIconWhite from '../../assets/icons/dark/backIcon.svg';
+import darkBackground from '../../assets/images/darkBackground.png';
 
-export const RoutineAddListModal = () => {
+export const RoutineAddListModal = (props) => {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
 
@@ -17,7 +21,7 @@ export const RoutineAddListModal = () => {
     dispatch(action());
   }
 
-  // could this be in a slice
+  // could this be in a slice?
   const routineCollection = {
     'documents': [
       {
@@ -103,23 +107,29 @@ export const RoutineAddListModal = () => {
       const duration = routine.fields.duration.integerValue;
       const difficulty = routine.fields.difficulty.integerValue;
       if (category === '건강') {
-        sethealthRoutines(routines => [...routines, {
-          'name': name,
-          'duration': duration,
-          'difficulty': difficulty,
-        }]);
+        for (let j = 0; j < 5; j++) {
+          sethealthRoutines(routines => [...routines, {
+            'name': name,
+            'duration': duration,
+            'difficulty': difficulty,
+          }]);
+        }
       } else if (category === '성장') {
-        setSelfHelpRoutines(routines => [...routines, {
-          'name': name,
-          'duration': duration,
-          'difficulty': difficulty,
-        }]);
+        for (let j = 0; j < 10; j++) {
+          setSelfHelpRoutines(routines => [...routines, {
+            'name': name,
+            'duration': duration,
+            'difficulty': difficulty,
+          }]);
+        }
       } else {
-        setLivingRoutines(routines => [...routines, {
-          'name': name,
-          'duration': duration,
-          'difficulty': difficulty,
-        }]);
+        for (let j = 0; j < 5; j++) {
+          setLivingRoutines(routines => [...routines, {
+            'name': name,
+            'duration': duration,
+            'difficulty': difficulty,
+          }]);
+        }
       }
     }
   }, []);
@@ -129,29 +139,70 @@ export const RoutineAddListModal = () => {
       animationType="slide"
       transparent={false}
       visible={modalState.routineAddListModal}>
-      <SafeAreaView>
-        <Pressable style={{ flexDirection: 'row' }}>
-          <Pressable
-            onPress={() => handleModal(closeRoutineAddListModal)}
-            style={{ paddingRight: '4%', paddingLeft: '6%', paddingTop: 15, paddingBottom: 15 }}>
-            <BackIcon />
+      <SafeAreaView style={styles.container}>
+        <ImageBackground source={props.isTutorial ? darkBackground : null}>
+          <Pressable style={globalStyles.rowFlex}>
+            <Pressable
+              onPress={props.isTutorial ? () => alert('back') : () => handleModal(closeRoutineAddListModal)}
+              style={styles.backButton}>
+              {props.isTutorial ? <BackIconWhite /> : <BackIcon />}
+            </Pressable>
+            <View style={props.isTutorial ? tutorialStyle.header : styles.header}>
+              <PretendardedText style={props.isTutorial ? tutorialStyle.headerText : styles.headerText}>{props.isTutorial ? '이전으로' : '루틴 추가하기'}</PretendardedText>
+            </View>
           </Pressable>
-          <View style={{ width: '76%', justifyContent: 'center', alignItems: 'center' }}>
-            <PretendardedText style={{ fontWeight: 700, fontSize: 16, color: '#222222' }}>루틴 추가하기</PretendardedText>
-          </View>
-        </Pressable>
-        <View style={{ marginLeft: '5%', marginTop: '2.5%' }}>
-          <PretendardedText style={{ fontWeight: 700, fontSize: 12, marginBottom: '4%', color: '#4C4C4C' }}>루틴 목록</PretendardedText>
-          <CategoryRoutineList category="건강" routines={healthRoutines}/>
-          <CategoryRoutineList category="성장" routines={selfHelpRoutines}/>
-          <CategoryRoutineList category="생활" routines={livingRoutines}/>
-        </View>
-        <Pressable>
-          <PretendardedText>추가하기</PretendardedText>
-        </Pressable>
+          <ScrollView style={styles.scrollView}>
+            {props.isTutorial ? <View /> : <PretendardedText style={styles.listTitle}>루틴 목록</PretendardedText>}
+            <CategoryRoutineList category="건강" routines={healthRoutines} isTutorial={props.isTutorial} />
+            <CategoryRoutineList category="성장" routines={selfHelpRoutines} isTutorial={props.isTutorial} />
+            <CategoryRoutineList category="생활" routines={livingRoutines} isTutorial={props.isTutorial} />
+          </ScrollView>
+        </ImageBackground>
       </SafeAreaView>
+        <ButtonBottom
+          text="추가하기"
+          style={globalStyles.oneFlex} />
     </Modal>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 6.9 },
+  backButton: {
+    paddingRight: '4%',
+    paddingLeft: '6%',
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  header: {
+    width: '76%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontWeight: 700,
+    fontSize: 16,
+    color: '#222222',
+  },
+  scrollView: {
+    marginLeft: '5%',
+    marginTop: '2.5%',
+  },
+  listTitle: {
+    fontWeight: 700,
+    fontSize: 12,
+    marginBottom: '4%',
+    color: '#4C4C4C',
+  },
+});
+
+const tutorialStyle = StyleSheet.create({
+  header: {
+    justifyContent: 'center',
+  },
+  headerText: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: 'white',
+  },
+});
