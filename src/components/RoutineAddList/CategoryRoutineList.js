@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
 import { Category } from '../CustomComponent/Category';
 import { Routine } from './Routine';
 
 export const CategoryRoutineList = (props) => {
   const renderRoutineList = routine => (
     <Routine
+      isTutorial={props.isTutorial}
       name={routine.name}
       duration={routine.duration}
       difficulty={routine.difficulty}/>
@@ -22,5 +22,3 @@ export const CategoryRoutineList = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
