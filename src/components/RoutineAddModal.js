@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeRoutineAddModal, openRoutineAddListModal } from '../redux/reducerSlices/modalSlice';
 
 import PretendardedText from './CustomComponent/PretendardedText';
+import { ButtonBottom } from './Buttons/ButtonBottom';
 
 export const RoutineAddModal = () => {
   const dispatch = useDispatch();
@@ -54,11 +55,9 @@ export const RoutineAddModal = () => {
                 </View>
               </Pressable>
             </View>
-            <Pressable
-              style={styles.nextButton}
-              onPress={handleModalCombo}>
-              <PretendardedText style={styles.nextButtonText}>다음</PretendardedText>
-            </Pressable>
+            <ButtonBottom
+              action={handleModalCombo}
+              text="다음"/>
           </View>
         </TouchableWithoutFeedback>
       </Pressable>
@@ -157,17 +156,5 @@ const styles = StyleSheet.create({
     color: '#6184FF',
     fontWeight: 700,
     fontSize: 7,
-  },
-  nextButton: {
-    flex: 1,
-    backgroundColor: '#3CE3AC',
-    width: '100%',
-    height: 87,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  nextButtonText: {
-    fontWeight: 700,
-    fontSize: 20,
   },
 });
