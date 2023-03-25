@@ -17,12 +17,13 @@ export const RoutineAddModal = () => {
 
   function handleModalCombo() {
     handleModal(closeRoutineAddModal);
-    setTimeout(() => handleModal(openRoutineAddListModal), 500);
+    setTimeout(() => handleModal(openRoutineAddListModal), 50);
   }
 
   return (
     <Modal
-      animationType="slide"
+      // TODO: disable animation on background
+      animationType="none"
       transparent={true}
       visible={modalState.routineAddModal}>
       <Pressable
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
+    backgroundColor: 'rgba(52, 52, 52, 0.5)',
   },
   modalView: {
     alignItems: 'center',
