@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     signedIn: false,
+    momoActivated: false,
+    streak: 0,
 };
 
 export const userSlice = createSlice({
@@ -14,9 +16,12 @@ export const userSlice = createSlice({
         logout: (state) => {
             state.signedIn = false;
         },
+        activateMomo: (state) => {
+            state.momoActivated = true;
+        },
     },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, activateMomo } = userSlice.actions;
 
 export default userSlice.reducer;

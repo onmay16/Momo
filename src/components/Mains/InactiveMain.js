@@ -9,10 +9,15 @@ import PretendardedText from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
 
 
-//TO-DO: replace momo.png with sleeping momo gif
-import sleepingMomo from '../../assets/character/momo.png';
+import { activateMomo } from '../../redux/reducerSlices/userSlice';
 
-const InactiveMain = (props) => {
+//TO-DO: replace momo.png with sleeping momo gif
+import sleepingMomo from '../../assets/character/momo.png';vhrgn
+
+const InactiveMain = () => {
+    const dispatch = useDispatch();
+    const userState = useSelector(state => state.user);
+
     const opacity = useRef(new Animated.Value(1)).current;
 
     const dispatch = useDispatch();
@@ -21,21 +26,21 @@ const InactiveMain = (props) => {
         dispatch(openDescriptionTypeModal());
     }
 
-    function activateMomo() {
-        if (!props.momoActivated) {
+    function activate() {
+        if (userState.momoActivated) {
             Animated.timing(opacity, {
                 toValue: 0,
                 useNativeDriver: true,
             }).start();
         }
         setTimeout(() => {
-            props.setMomoActivated(true);
+            dispatch(activateMomo());
         }, 200);
     }
 
     return (
         <View style={{ flex: 6 }}>
-            <View style={styles.momo}>
+            <View style={customStyles(userState.momoActivated).momo}>
                 <Image source={sleepingMomo} />
             </View>
             <Animated.View style={{opacity: opacity}}>
@@ -63,5 +68,8 @@ const styles = StyleSheet.create({
     linearGradient: { alignItems: 'center', justifyContent: 'center', borderRadius: 12, height: 90, width: '90%' },
     activateText: { fontWeight: 700, fontSize: 16, color: 'white' },
     todayRoutine: { fontWeight: 600, fontSize: 16, marginLeft: 30, marginBottom: 14 },
-    momo: { flex: this.momoActivated ? (Platform.OS === 'ios' ? 1 : 0.5) : (Platform.OS === 'ios' ? 4 : 3), justifyContent: 'center', alignItems: 'center' },
+});
+
+const customStyles = (momoActivated) => StyleSheet.create({
+    momo: { flex: momoActivated ? (Platform.OS === 'ios' ? 1 : 0.5) : (Platform.OS === 'ios' ? 4 : 3), justifyContent: 'center', alignItems: 'center' },
 });

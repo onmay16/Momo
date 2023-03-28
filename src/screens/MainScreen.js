@@ -1,7 +1,6 @@
 import { StyleSheet, View, ImageBackground, SafeAreaView, Platform } from 'react-native';
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { logout } from '../redux/reducerSlices/userSlice';
+import { useSelector } from 'react-redux';
 import { globalStyles } from '../styles';
 
 import PretendardedText from '../components/CustomComponent/PretendardedText';
@@ -14,31 +13,23 @@ import Notification from '../components/Notification';
 import BackgroundImg from '../assets/images/bg_main.png';
 
 const MainScreen = () => {
-    // const dispatch = useDispatch();
-
-    // function testLogout() {
-    //     dispatch(logout());
-    // }
-
-    //TO-DO: stroe state in a slice
-    const [daysInARow, setDaysInARow] = useState(0);
-    const [momoActivated, setMomoActivated] = useState(false);
+    const userState = useSelector(state => state.user);
 
     return (
-        <View>
-            <SafeAreaView style={globalStyles.container}>
-                <ImageBackground source={BackgroundImg} resizeMode="contain" style={styles.bgImg}>
+        <View style={styles.backgroundColor}>
+            <SafeAreaView style={[globalStyles.container, styles.backgroundColor]}>
+                <ImageBackground source={BackgroundImg} resizeMode="contain" style={[styles.bgImg, styles.backgroundColor]}>
                     <View style={styles.mainHeader}>
                         <View style={styles.headerText}>
                             <View style={styles.textFirstRow}>
-                                <PretendardedText style={styles.firstRowBold}>{daysInARow}일</PretendardedText>
+                                <PretendardedText style={styles.firstRowBold}>{userState.streak}일</PretendardedText>
                                 <PretendardedText style={styles.firstRowNormal}> 연속으로{'\n'}</PretendardedText>
                             </View>
                             <PretendardedText style={styles.textSecondRow}>루틴 진행 중!</PretendardedText>
                         </View>
                         <Notification/>
                     </View>
-                    { momoActivated ? <ActiveMain momoActivated={momoActivated}/> : <InactiveMain setMomoActivated={setMomoActivated} momoActivated={momoActivated}/> }
+                    { userState.momoActivated ? <ActiveMain/> : <InactiveMain/> }
                 </ImageBackground>
             </SafeAreaView>
         </View>
@@ -46,7 +37,7 @@ const MainScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: { height: '100%' },
+    backgroundColor: { backgroundColor: '#F9F9F9' },
     bgImg: { flex: 1, justifyContent: 'center' },
     mainHeader: { flex: 1, flexDirection: 'row', marginLeft: 30, marginRight: 30, marginTop: 15 },
     headerText: { flex: 1 },
