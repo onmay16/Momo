@@ -12,12 +12,12 @@ export const modalStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.5)',
     },
     modalView: {
         justifyContent: 'center',
         alignItems: 'center',
         width: 270,
-        height: 357,
         backgroundColor: 'white',
         borderRadius: 8,
         borderColor: '#EEE',

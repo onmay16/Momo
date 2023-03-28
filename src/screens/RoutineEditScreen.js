@@ -54,8 +54,6 @@ const RoutineScreen = () => {
           <RoutineAddModal/>
           <RoutineAddListModal isTutorial={false}/>
         </View>
-        <PairTypeModal visible={isModalVisible} setVisible={setIsModalVisible} type={'addRoutineModal'}/>
-        {/* <DescriptionTypeModal visible={isModalVisible} setVisible={setIsModalVisible} type={'overTimeModal'}/> */}
       </SafeAreaView>
     </View>
   );
