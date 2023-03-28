@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, TouchableWithoutFeedback, View, Modal, Text } from 'react-native';
+import { Pressable, StyleSheet, TouchableWithoutFeedback, View, Modal } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,6 +6,7 @@ import { closeRoutineAddModal, openRoutineAddListModal } from '../redux/reducerS
 
 import PretendardedText from './CustomComponent/PretendardedText';
 import { ButtonBottom } from './Buttons/ButtonBottom';
+import { ComingSoon } from './CustomComponent/ComingSoon';
 
 export const RoutineAddModal = () => {
   const dispatch = useDispatch();
@@ -48,9 +49,7 @@ export const RoutineAddModal = () => {
                 <View style={styles.optionView}>
                   <View style={styles.customOptionTitleView}>
                     <PretendardedText style={styles.customOptionTitle}>나만의 루틴</PretendardedText>
-                    <View style={styles.comingSoon}>
-                      <PretendardedText style={styles.comingSoonText}>COMING SOON</PretendardedText>
-                    </View>
+                    <ComingSoon/>
                   </View>
                   <PretendardedText style={styles.optionDescription}>내가 만드는 나만의 루틴{'\n'}루틴 이름 ∙ 소요시간 변경 가능</PretendardedText>
                 </View>
@@ -145,18 +144,5 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 20,
     marginRight: 8,
-  },
-  comingSoon: {
-    backgroundColor: '#D7E0FF',
-    borderRadius: 4,
-    height: 14,
-    width: 65,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  comingSoonText: {
-    color: '#6184FF',
-    fontWeight: 700,
-    fontSize: 7,
   },
 });
