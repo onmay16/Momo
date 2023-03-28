@@ -51,7 +51,7 @@ export const PairTypeModal = (props) => {
 
   return (
     <Modal
-      animationType="none"
+      animationType="fade"
       transparent={true}
       visible={props.visible}
     >
