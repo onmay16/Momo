@@ -4,6 +4,7 @@ const initialState = {
     signedIn: false,
     momoActivated: false,
     streak: 0,
+    level: 0,
 };
 
 export const userSlice = createSlice({
