@@ -1,7 +1,7 @@
 import { StyleSheet, View, Animated, Image, Dimensions, Platform, ScrollView } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import * as Progress from 'react-native-progress';
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 
 import Action from '../Action';
 
