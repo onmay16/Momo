@@ -1,6 +1,6 @@
-import React, {useEffect,useState} from 'react';
-import { Image, Platform } from 'react-native';
-import {useDispatch,useSelector} from 'react-redux';
+import React from 'react';
+import { Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,17 +14,11 @@ import ClosetScreen from '../screens/ClosetScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LoginScreenAlpha from '../screens/LoginScreenAlpha';
 
-// TO-DO: replace pngs to svgs when svg configuration has been done
-import Home from '../assets/icons/light/home.png';
-import HomeFocused from '../assets/icons/light/home_focused.png';
-import Routine from '../assets/icons/light/routine.png';
-import RoutineFocused from '../assets/icons/light/routine_focused.png';
-import Challenge from '../assets/icons/light/challenge.png';
-import ChallengeFocused from '../assets/icons/light/challenge_focused.png';
-import Closet from '../assets/icons/light/closet.png';
-import ClosetFocused from '../assets/icons/light/closet_focused.png';
-import Settings from '../assets/icons/light/settings.png';
-import SettingsFocused from '../assets/icons/light/settings_focused.png';
+import { HomeTab } from '../components/NavigatorComponent/HomeTab';
+import { RoutineTab } from '../components/NavigatorComponent/RoutineTab';
+import { ChallengeTab } from '../components/NavigatorComponent/ChallengeTab';
+import { ClosetTab } from '../components/NavigatorComponent/ClosetTab';
+import { SettingsTab } from '../components/NavigatorComponent/SettingsTab';
 
 
 const AuthStack = createStackNavigator();
@@ -56,8 +50,7 @@ const TabComponent = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Image source={focused ? HomeFocused : Home} />;
-            // return focused ? <Home/> <HomeFocused/>:
+            return <HomeTab focused={focused}/>;
           },
         }} />
       <MainScreenTab.Screen
@@ -66,7 +59,7 @@ const TabComponent = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Image source={focused ? RoutineFocused : Routine} />;
+            return <RoutineTab focused={focused}/>;
           },
         }} />
       <MainScreenTab.Screen
@@ -75,7 +68,7 @@ const TabComponent = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Image source={focused ? ChallengeFocused : Challenge} />;
+            return <ChallengeTab focused={focused}/>;
           },
         }} />
       <MainScreenTab.Screen
@@ -84,7 +77,7 @@ const TabComponent = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Image source={focused ? ClosetFocused : Closet} />;
+            return <ClosetTab focused={focused}/>;
           },
         }} />
       <MainScreenTab.Screen
@@ -93,7 +86,7 @@ const TabComponent = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
-            return <Image source={focused ? SettingsFocused : Settings} />;
+            return <SettingsTab focused={focused}/>;
           },
         }} />
     </MainScreenTab.Navigator>
@@ -103,11 +96,16 @@ const TabComponent = () => {
 export const RootNavigator = () => {
 
   const isAuthUser = useSelector((state) => state.user.signedIn);
-  
+
   return (
     <AuthStack.Navigator
       name="ROOT"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: '#F9F9F9',
+        },
+      }}
     >
       {isAuthUser? (
         <AuthStack.Screen name="Tabs" component={TabComponent}
