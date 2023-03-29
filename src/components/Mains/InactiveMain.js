@@ -5,14 +5,14 @@ import { useDispatch } from 'react-redux';
 
 import { openDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
 
 
 import { activateMomo } from '../../redux/reducerSlices/userSlice';
 
 //TO-DO: replace momo.png with sleeping momo gif
-import sleepingMomo from '../../assets/character/momo.png';vhrgn
+import sleepingMomo from '../../assets/character/momo.png';
 
 const InactiveMain = () => {
     const dispatch = useDispatch();

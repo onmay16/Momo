@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { globalStyles } from '../styles';
 
-import PretendardedText from '../components/CustomComponent/PretendardedText';
+import { PretendardedText } from '../components/CustomComponent/PretendardedText';
 
 import ActiveMain from '../components/Mains/ActiveMain';
 import InactiveMain from '../components/Mains/InactiveMain';
 import Notification from '../components/Notification';
 
-//TO-DO: replace pngs with svgs
 import BackgroundImg from '../assets/images/bg_main.png';
 
 const MainScreen = () => {

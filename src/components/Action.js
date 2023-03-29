@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image, Pressable } from 'react-native';
 import React from 'react';
-import PretendardedText from './CustomComponent/PretendardedText';
+import { PretendardedText } from './CustomComponent/PretendardedText';
 
 import actionImg from '../assets/images/action_img.png';
 import incompleteAction from '../assets/images/action_incomplete.png';

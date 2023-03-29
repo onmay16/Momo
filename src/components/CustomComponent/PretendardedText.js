@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 import React from 'react';
 
-const PretendardedText = (props) => {
+export const PretendardedText = (props) => {
     return (
         <Text
             {...props}
@@ -13,5 +13,3 @@ const PretendardedText = (props) => {
         </Text>
     );
 };
-
-export default PretendardedText;
