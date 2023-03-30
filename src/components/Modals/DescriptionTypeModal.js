@@ -1,7 +1,10 @@
 import { StyleSheet, Modal, View, Pressable, Text, TouchableWithoutFeedback } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { modalStyles } from "../../styles";
+import { closeDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
+
+import { modalStyles } from '../../styles';
 
 import PretendardedText from '../CustomComponent/PretendardedText';
 
@@ -10,6 +13,8 @@ import PhotoVer from '../../assets/images/modals/photoVer.svg';
 import StartRoutine from '../../assets/images/modals/startRoutine.svg';
 
 export const DescriptionTypeModal = (props) => {
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modal);
 
   const overTimeModal = {
     title: '잠깐만요!',
@@ -42,6 +47,10 @@ export const DescriptionTypeModal = (props) => {
   const [currentModalState, setCurrentModalState] = useState({});
   const [delayedTime, setDelayedTime] = useState(10);
 
+  function closeModal() {
+    dispatch(closeDescriptionTypeModal());
+  }
+
   useEffect(() => {
     if (props.type === 'overTimeModal') {
       setCurrentModalState(overTimeModal);
@@ -49,18 +58,18 @@ export const DescriptionTypeModal = (props) => {
       setCurrentModalState(photoModal);
     } else {
       setCurrentModalState(routineStartModal);
-    };
+    }
   }, []);
 
   return (
     <Modal
       animationType="none"
       transparent={true}
-      visible={props.visible}
+      visible={modalState.descriptionTypeModal}
     >
       <Pressable
         style={modalStyles.container}
-        onPressOut={() => props.setVisible(false)}>
+        onPressOut={closeModal}>
         <TouchableWithoutFeedback>
           <View style={modalStyles.modalView}>
             <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
@@ -75,12 +84,12 @@ export const DescriptionTypeModal = (props) => {
             <View style={modalStyles.buttons}>
               <Pressable
                 style={[modalStyles.button, customSytles(currentModalState.hasCancel).leftButton]}
-                onPress={() => props.setVisible(false)}>
+                onPress={closeModal}>
                 <PretendardedText style={customSytles(currentModalState.hasCancel).buttonText}>{currentModalState.leftButtonText}</PretendardedText>
               </Pressable>
               <Pressable
                 style={[modalStyles.button, modalStyles.rightButton]}
-                onPress={props.rightButtonAction ? props.rightButtonAction : () => props.setVisible(false)}>
+                onPress={props.rightButtonAction ? props.rightButtonAction : closeModal}>
                 <PretendardedText style={modalStyles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
