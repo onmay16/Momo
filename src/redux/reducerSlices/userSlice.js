@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+    isLoading: true,
     signedIn: false,
     momoActivated: false,
     streak: 0,
@@ -11,6 +12,9 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        setLoading: (state) => {
+            state.isLoading = false;
+        },
         login: (state) => {
             state.signedIn = true;
         },
@@ -23,6 +27,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { login, logout, activateMomo } = userSlice.actions;
+export const { setLoading, login, logout, activateMomo } = userSlice.actions;
 
 export default userSlice.reducer;
