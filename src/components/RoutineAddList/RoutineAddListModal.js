@@ -5,7 +5,7 @@ import { globalStyles } from '../../styles';
 
 import { closeRoutineAddListModal } from '../../redux/reducerSlices/modalSlice';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { CategoryRoutineList } from './CategoryRoutineList';
 import { ButtonBottom } from '../Buttons/ButtonBottom';
 

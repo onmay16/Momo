@@ -1,16 +1,18 @@
-import { StyleSheet, View, Animated, Image, Dimensions, Platform, ScrollView } from 'react-native';
+import { StyleSheet, View, Animated, Dimensions, Platform, ScrollView } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import * as Progress from 'react-native-progress';
 import { PretendardedText } from '../CustomComponent/PretendardedText';
+import { useSelector } from 'react-redux';
 
 import Action from '../Action';
 
 //TO-DO: replace momo.png with sleeping momo gif
-import activeMomo from '../../assets/character/momo.png';
-import currentPointFire from '../../assets/images/current_point_fire.png';
-import remainingPointFire from '../../assets/images/remaining_point_fire.png';
+import Dust from '../../assets/character/1_dust.svg';
+import CurrentPointFire from '../../assets/images/currentPointFire.svg';
+import RemainingPointFire from '../../assets/images/remainingPointFire.svg';
 
-const ActiveMain = (props) => {
+export const ActiveMain = () => {
+    const userState = useSelector(state => state.user);
 
     function calculateDuration(array) {
         const total = array.reduce((accumulator, object) => {
@@ -36,7 +38,7 @@ const ActiveMain = (props) => {
 
     const opacity = useRef(new Animated.Value(0)).current;
     useEffect(() => {
-        if (props.momoActivated) {
+        if (userState.momoActivated) {
             Animated.timing(opacity, {
                 toValue: 1,
                 useNativeDriver: true,
@@ -79,19 +81,25 @@ const ActiveMain = (props) => {
         <Animated.View style={[styles.container, {opacity: opacity}]}>
             <View style={styles.progressArea}>
                 <View style={styles.momo}>
-                    <Image source={activeMomo} />
+                    <Dust/>
                 </View>
                 <View style={styles.currentPointContainer}>
                     <PretendardedText style={styles.currentPoint}>{currentPoint} </PretendardedText>
-                    <Image source={currentPointFire} />
+                    <CurrentPointFire />
                 </View>
                 <View style={{ justifyContent: 'center' }}>
-                    <Progress.Bar progress={currentProgress} height={9} width={Dimensions.get('window').width * 0.65} borderWidth={0} color={'#32CACA'} style={{ backgroundColor: '#B3B3B3' }} />
+                    <Progress.Bar
+                        progress={currentProgress}
+                        height={9}
+                        width={Dimensions.get('window').width * 0.65}
+                        borderWidth={0}
+                        color={'#32CACA'}
+                        style={{ backgroundColor: '#B3B3B3' }}/>
                 </View>
                 <View style={styles.remainingPointContainer}>
                     <PretendardedText style={styles.remainingPoint}>다음 단계까지 </PretendardedText>
                     <PretendardedText style={styles.remainingPoint}>{remainingPoint} </PretendardedText>
-                    <Image source={remainingPointFire} />
+                    <RemainingPointFire />
                 </View>
             </View>
             <View style={styles.todayRoutineContainer}>
@@ -112,8 +120,6 @@ const ActiveMain = (props) => {
         </Animated.View>
     );
 };
-
-export default ActiveMain;
 
 const styles = StyleSheet.create({
     container: { flex: 6, marginLeft: 30, marginRight: 30 },
