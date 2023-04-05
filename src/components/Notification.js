@@ -1,16 +1,15 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 
-import NotificationIcon from '../assets/icons/light/notification.png';
+import Bell from '../assets/icons/light/bell.svg';
 
 const Notification = () => {
     return (
-        <Image source={NotificationIcon} style={styles.notification}/>
+        <Bell/>
     );
 };
 
 export default Notification;
 
 const styles = StyleSheet.create({
-    notification: { marginTop: 12 },
 });

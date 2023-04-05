@@ -1,26 +1,22 @@
-import { StyleSheet, View, Image, Platform, Pressable, Animated } from 'react-native';
+import { StyleSheet, View, Platform, Pressable, Animated } from 'react-native';
 import React, { useRef } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { openDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
+import { activateMomo } from '../../redux/reducerSlices/userSlice';
 
 import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
 
+//TODO: replace momo.png with sleeping momo gif
+import Dust from '../../assets/character/1_dust.svg';
 
-import { activateMomo } from '../../redux/reducerSlices/userSlice';
-
-//TO-DO: replace momo.png with sleeping momo gif
-import sleepingMomo from '../../assets/character/momo.png';
-
-const InactiveMain = () => {
+export const InactiveMain = () => {
     const dispatch = useDispatch();
     const userState = useSelector(state => state.user);
 
     const opacity = useRef(new Animated.Value(1)).current;
-
-    const dispatch = useDispatch();
 
     function openModal() {
         dispatch(openDescriptionTypeModal());
@@ -41,7 +37,7 @@ const InactiveMain = () => {
     return (
         <View style={{ flex: 6 }}>
             <View style={customStyles(userState.momoActivated).momo}>
-                <Image source={sleepingMomo} />
+                <Dust />
             </View>
             <Animated.View style={{opacity: opacity}}>
                 <PretendardedText style={styles.todayRoutine}>오늘의 루틴</PretendardedText>
@@ -55,12 +51,10 @@ const InactiveMain = () => {
                     </LinearGradient>
                 </Pressable>
             </Animated.View>
-            <DescriptionTypeModal type={'routineStartModal'} rightButtonAction={activateMomo}/>
+            <DescriptionTypeModal type={'routineStartModal'} rightButtonAction={activate}/>
         </View>
     );
 };
-
-export default InactiveMain;
 
 const styles = StyleSheet.create({
     activateBtn: { alignItems: 'center', justifyContent: 'center', marginBottom: 22 },

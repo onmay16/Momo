@@ -6,7 +6,7 @@ import { closeDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice'
 
 import { modalStyles } from '../../styles';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 
 import OverTime from '../../assets/images/modals/overTime.svg';
 import PhotoVer from '../../assets/images/modals/photoVer.svg';
@@ -89,7 +89,7 @@ export const DescriptionTypeModal = (props) => {
               </Pressable>
               <Pressable
                 style={[modalStyles.button, modalStyles.rightButton]}
-                onPress={props.rightButtonAction ? props.rightButtonAction : closeModal}>
+                onPress={props.rightButtonAction ? () => props.rightButtonAction() : closeModal}>
                 <PretendardedText style={modalStyles.buttonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
