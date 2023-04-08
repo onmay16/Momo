@@ -12,7 +12,9 @@ import CurrentPointFire from '../../assets/images/currentPointFire.svg';
 import RemainingPointFire from '../../assets/images/remainingPointFire.svg';
 
 export const ActiveMain = () => {
+
     const userState = useSelector(state => state.user);
+    const userRoutineState = useSelector(state => state.userRoutineSlice);
 
     function calculateDuration(array) {
         const total = array.reduce((accumulator, object) => {
@@ -28,13 +30,8 @@ export const ActiveMain = () => {
     const [remainingPoint, setRemainingPoint] = useState(100);
     const [currentProgress, setCurrentProgress] = useState(currentPoint / (currentPoint + remainingPoint));
     const [remainingTime, setRemainingTime] = useState(0);
-    const [actionAvailable, setActionAvailable] = useState([
-        { id: 1, name: '물 마시기', type: 'living', complete: false, duration: 1, point: 5 },
-        { id: 2, name: '요가', type: 'living', complete: false, duration: 20, point: 25 },
-        { id: 3, name: '일본어 공부', type: 'self improvement', complete: false, duration: 30, point: 50 },
-        { id: 4, name: '명상', type: 'living', complete: false, duration: 15, point: 25 },
-        { id: 5, name: '영양제', type: 'living', complete: false, duration: 3, point: 5 },
-    ]);
+    // TODO: remove actionAvailable state after update complete status logic below
+    const [actionAvailable, setActionAvailable] = useState([]);
 
     const opacity = useRef(new Animated.Value(0)).current;
     useEffect(() => {
@@ -78,7 +75,7 @@ export const ActiveMain = () => {
     }, [actionAvailable]);
 
     return (
-        <Animated.View style={[styles.container, {opacity: opacity}]}>
+        <Animated.View style={[styles.container, { opacity: opacity }]}>
             <View style={styles.progressArea}>
                 <View style={styles.momo}>
                     <Dust/>
@@ -112,7 +109,7 @@ export const ActiveMain = () => {
             </View>
             <View style={styles.actionsList}>
                 <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
-                    {actionAvailable.map((action) => (
+                    {userRoutineState.userRoutineActionList.map((action) => (
                         <Action id={action.id} name={action.name} complete={action.complete} updateCompleteStatus={() => updateCompleteStatus(action.id)} />
                     ))}
                 </ScrollView>
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
     currentPointContainer: { flexDirection: 'row', marginBottom: 3, alignItems: 'center' },
     currentPoint: { fontWeight: 700, fontSize: 14, color: '#FF6056', marginRight: 2 },
     remainingPointContainer: { flexDirection: 'row', marginTop: 3, alignItems: 'center', justifyContent: 'flex-end' },
-    todayRoutineContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14},
+    todayRoutineContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 },
     todayRoutine: { fontWeight: 600, fontSize: 16, color: '#4C4C4C' },
     remainingTimeContainer: { flexDirection: 'row', alignItems: 'center' },
     remainingTimeText: { fontSize: 14, color: '#808080', fontWeight: 500 },
