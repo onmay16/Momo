@@ -6,6 +6,9 @@ const initialState = {
     momoActivated: false,
     streak: 0,
     level: 0,
+    exp: 0,
+    wakeUpTime: null,
+    CompleteTime: null,
 };
 
 export const userSlice = createSlice({
@@ -28,5 +31,4 @@ export const userSlice = createSlice({
 });
 
 export const { setLoading, login, logout, activateMomo } = userSlice.actions;
-
 export default userSlice.reducer;
