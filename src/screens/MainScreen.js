@@ -1,10 +1,11 @@
-import { StyleSheet, View, ImageBackground, SafeAreaView, Platform } from 'react-native';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { StyleSheet, View, ImageBackground, SafeAreaView, Platform, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { globalStyles } from '../styles';
 
-import { PretendardedText } from '../components/CustomComponent/PretendardedText';
+import { fetchUserRoutine } from '../redux/reducerSlices/userRoutineSlice';
 
+import { PretendardedText } from '../components/CustomComponent/PretendardedText';
 import { ActiveMain } from '../components/Mains/ActiveMain';
 import { InactiveMain } from '../components/Mains/InactiveMain';
 import Notification from '../components/Notification';
@@ -12,27 +13,41 @@ import Notification from '../components/Notification';
 import BackgroundImg from '../assets/images/bg_main.png';
 
 const MainScreen = () => {
+    const dispatch = useDispatch();
     const userState = useSelector(state => state.user);
+    const userRoutineState = useSelector(state => state.userRoutineSlice);
 
-    return (
-        <View style={styles.backgroundColor}>
-            <SafeAreaView style={[globalStyles.container, styles.backgroundColor]}>
-                <ImageBackground source={BackgroundImg} resizeMode="contain" style={[styles.bgImg, styles.backgroundColor]}>
-                    <View style={styles.mainHeader}>
-                        <View style={styles.headerText}>
-                            <View style={styles.textFirstRow}>
-                                <PretendardedText style={styles.firstRowBold}>{userState.streak}일</PretendardedText>
-                                <PretendardedText style={styles.firstRowNormal}> 연속으로{'\n'}</PretendardedText>
+    useEffect(() => {
+        dispatch(fetchUserRoutine());
+    }, [dispatch]);
+
+    if (userRoutineState.isLoading || userRoutineState.error) {
+        <SafeAreaView>
+            <Text>Loading</Text>
+        </SafeAreaView>;
+    }
+
+    if (userRoutineState.userRoutineActionList) {
+        return (
+            <View style={styles.backgroundColor}>
+                <SafeAreaView style={[globalStyles.container, styles.backgroundColor]}>
+                    <ImageBackground source={BackgroundImg} resizeMode="contain" style={[styles.bgImg, styles.backgroundColor]}>
+                        <View style={styles.mainHeader}>
+                            <View style={styles.headerText}>
+                                <View style={styles.textFirstRow}>
+                                    <PretendardedText style={styles.firstRowBold}>{userState.streak}일</PretendardedText>
+                                    <PretendardedText style={styles.firstRowNormal}> 연속으로{'\n'}</PretendardedText>
+                                </View>
+                                <PretendardedText style={styles.textSecondRow}>루틴 진행 중!</PretendardedText>
                             </View>
-                            <PretendardedText style={styles.textSecondRow}>루틴 진행 중!</PretendardedText>
+                            <Notification />
                         </View>
-                        <Notification/>
-                    </View>
-                    { userState.momoActivated ? <ActiveMain/> : <InactiveMain/> }
-                </ImageBackground>
-            </SafeAreaView>
-        </View>
-    );
+                        {userState.momoActivated ? <ActiveMain /> : <InactiveMain />}
+                    </ImageBackground>
+                </SafeAreaView>
+            </View>
+        );
+    }
 };
 
 const styles = StyleSheet.create({
