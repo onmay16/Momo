@@ -1,5 +1,10 @@
 import { StyleSheet, View, Image, Pressable } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateCompleteStatus } from '../redux/reducerSlices/userRoutineSlice';
+import { updateExp } from '../redux/reducerSlices/userSlice';
+
 import { PretendardedText } from './CustomComponent/PretendardedText';
 
 import actionImg from '../assets/images/action_img.png';
@@ -7,14 +12,29 @@ import incompleteAction from '../assets/images/action_incomplete.png';
 import completeAction from '../assets/images/action_complete.png';
 
 const Action = (props) => {
+    const dispatch = useDispatch();
+    const routineListState = useSelector(state => state.userRoutineSlice.userRoutineActionList);
+    const routine = routineListState.find(r => r.id === props.id);
+
+    function handleCompleteStatus(action) {
+        if (!routine.complete) {
+            dispatch(updateExp({ case: 'INCREMENT_EXP', amount: (9 + routine.streak) * routine.difficulty }));
+        } else {
+            dispatch(updateExp({ case: 'DECREMENT_EXP', amount: (9 + routine.streak) * routine.difficulty }));
+        }
+        dispatch(updateCompleteStatus(action));
+    }
+    useEffect(() => {
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.left}>
                 <Image source={actionImg} style={styles.actionImage} />
-                <PretendardedText style={styles.actionName}>{props.name}</PretendardedText>
+                <PretendardedText style={styles.actionName}>{routine.name}</PretendardedText>
             </View>
-            <Pressable onPress={() => props.updateCompleteStatus(props.id)}>
-                <Image source={props.complete ? completeAction : incompleteAction} style={{ marginRight: 14 }} />
+            <Pressable onPress={() => handleCompleteStatus(props.id)}>
+                <Image source={routine.complete ? completeAction : incompleteAction} style={{ marginRight: 14 }} />
             </Pressable>
         </View>
     );

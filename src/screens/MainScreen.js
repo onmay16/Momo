@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { globalStyles } from '../styles';
 
 import { fetchUserRoutine } from '../redux/reducerSlices/userRoutineSlice';
+import { fetchUserBasic } from '../redux/reducerSlices/userSlice';
 
 import { PretendardedText } from '../components/CustomComponent/PretendardedText';
 import { ActiveMain } from '../components/Mains/ActiveMain';
@@ -18,6 +19,7 @@ const MainScreen = () => {
     const userRoutineState = useSelector(state => state.userRoutineSlice);
 
     useEffect(() => {
+        dispatch(fetchUserBasic());
         dispatch(fetchUserRoutine());
     }, [dispatch]);
 
