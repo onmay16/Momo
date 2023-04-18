@@ -1,7 +1,7 @@
 import { StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 
 export const ButtonBottom = (props) => {
   return (
