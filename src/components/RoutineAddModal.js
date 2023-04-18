@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeRoutineAddModal, openRoutineAddListModal } from '../redux/reducerSlices/modalSlice';
 
-import PretendardedText from './CustomComponent/PretendardedText';
+import { PretendardedText } from './CustomComponent/PretendardedText';
 import { ButtonBottom } from './Buttons/ButtonBottom';
 import { ComingSoon } from './CustomComponent/ComingSoon';
 

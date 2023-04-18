@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 
-import PretendardedText from './PretendardedText';
+import { PretendardedText } from './PretendardedText';
 
 export const ComingSoon = () => {
   return (

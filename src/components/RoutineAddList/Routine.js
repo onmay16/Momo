@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 
-import PretendardedText from '../CustomComponent/PretendardedText';
+import { PretendardedText } from '../CustomComponent/PretendardedText';
 
 import Difficulty from '../../assets/images/difficultyStar.svg';
 
