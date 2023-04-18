@@ -2,7 +2,7 @@ import { StyleSheet, View, Image, Pressable } from 'react-native';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateCompleteStatus } from '../redux/reducerSlices/userRoutineSlice';
+import { updateRoutineStatus } from '../redux/reducerSlices/userRoutineSlice';
 import { updateExp } from '../redux/reducerSlices/userSlice';
 
 import { PretendardedText } from './CustomComponent/PretendardedText';
@@ -17,12 +17,16 @@ const Action = (props) => {
     const routine = routineListState.find(r => r.id === props.id);
 
     function handleCompleteStatus(action) {
+        const amount = (9 + routine.streak) * routine.difficulty
         if (!routine.complete) {
-            dispatch(updateExp({ case: 'INCREMENT_EXP', amount: (9 + routine.streak) * routine.difficulty }));
+            dispatch(updateExp({ case: 'INCREMENT_EXP', amount: amount }));
+            props.setAnimatedPoint(amount);
+            props.pointAnimation();
         } else {
-            dispatch(updateExp({ case: 'DECREMENT_EXP', amount: (9 + routine.streak) * routine.difficulty }));
+            dispatch(updateExp({ case: 'DECREMENT_EXP', amount: amount }));
+            props.setAnimatedPoint(0);
         }
-        dispatch(updateCompleteStatus(action));
+        dispatch(updateRoutineStatus(action));
     }
     useEffect(() => {
     }, []);
