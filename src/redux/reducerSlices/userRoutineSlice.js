@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserRoutine } from '../../api/userApi';
+import { getUserRoutine, postUserRoutine } from '../../api/userApi';
 
 const initialState = {
   userRoutineActionList: null,
@@ -16,7 +16,7 @@ export const fetchUserRoutine = createAsyncThunk(
   }
 );
 
-function extractRoutineData(payload) {
+function routineSerializer(payload) {
   const data = payload.documents;
   let userRoutineActionList = [];
   for (let i = 0; i < data.length; i++) {
@@ -25,7 +25,6 @@ function extractRoutineData(payload) {
     const fields = routine.fields;
     const duration = fields.duration.integerValue;
     // TODO: remove unused vars if they're not needed
-    const emoji = fields.emoji.stringValue;
     const category = fields.category.stringValue;
     const routineName = fields.routine_name.stringValue;
     const difficulty = fields.difficulty.integerValue;
@@ -60,10 +59,18 @@ export const userRoutineSlice = createSlice({
   name: 'userRoutineSlice',
   initialState,
   reducers: {
-    updateCompleteStatus: (state, action) => {
+    updateRoutineStatus: (state, action) => {
       const index = state.userRoutineActionList.findIndex(routine => routine.id === action.payload);
       const newArray = [...state.userRoutineActionList];
+      const currentStrike = newArray[index].streak;
 
+      if (!newArray[index].complete) {
+        state.remainingTime -= newArray[index].duration;
+        state.streak += 1;
+      } else {
+        state.remainingTime += newArray[index].duration;
+        state.streak = currentStrike;
+      }
       newArray[index].complete = !newArray[index].complete;
     },
   },
@@ -74,7 +81,7 @@ export const userRoutineSlice = createSlice({
       })
       .addCase(fetchUserRoutine.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userRoutineActionList = extractRoutineData(action.payload);
+        state.userRoutineActionList = routineSerializer(action.payload);
         state.remainingTime = calculateDuration(state.userRoutineActionList);
       })
       .addCase(fetchUserRoutine.rejected, (state, action) => {
@@ -84,5 +91,5 @@ export const userRoutineSlice = createSlice({
   },
 });
 
-export const { updateCompleteStatus } = userRoutineSlice.actions;
+export const { updateRoutineStatus } = userRoutineSlice.actions;
 export default userRoutineSlice.reducer;
