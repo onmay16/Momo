@@ -28,8 +28,6 @@ const Action = (props) => {
         }
         dispatch(updateRoutineStatus(action));
     }
-    useEffect(() => {
-    }, []);
 
     return (
         <View style={styles.container}>
