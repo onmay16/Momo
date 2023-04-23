@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserRoutine, postUserRoutine } from '../../api/userApi';
+import { getUserRoutine, patchIndividualUserRoutine } from '../../api/userApi';
 
 const initialState = {
   userRoutineActionList: null,
@@ -30,11 +30,12 @@ function routineSerializer(payload) {
     const difficulty = fields.difficulty.integerValue;
     const activeDay = fields.active_day.integerValue;
     const streak = fields.streak.integerValue;
+    const complete = fields.finished.booleanValue;
     const routineObj = {
       id: id,
       name: routineName,
       category: category,
-      complete: false,
+      complete: complete,
       duration: parseInt(duration),
       difficulty: parseInt(difficulty),
       streak: parseInt(streak),
@@ -66,12 +67,28 @@ export const userRoutineSlice = createSlice({
 
       if (!newArray[index].complete) {
         state.remainingTime -= newArray[index].duration;
-        state.streak += 1;
+        newArray[index].streak += 1;
+      } else if (newArray[index].streak > 0) {
+        state.remainingTime += newArray[index].duration;
+        newArray[index].streak -= 1;
       } else {
         state.remainingTime += newArray[index].duration;
-        state.streak = currentStrike;
+        newArray[index].streak = currentStrike;
       }
       newArray[index].complete = !newArray[index].complete;
+
+      // update individual user routine's finished status & streak
+      const dataBody = {
+        fields: {
+          finished: {
+            booleanValue: true,
+          },
+          streak: {
+            integerValue: newArray[index].streak,
+          },
+        },
+      };
+      patchIndividualUserRoutine(newArray[index].id, dataBody, ['finished','streak']);
     },
   },
   extraReducers: (builder) => {
