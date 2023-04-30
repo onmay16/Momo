@@ -26,17 +26,18 @@ export const fetchUserBasic = createAsyncThunk(
     }
 );
 
-const reuiqredPointDict = {
-    0: 0,
-    1: 190,
-    2: 399,
-    3: 1140,
-    4: 2462,
-    5: 5994,
-    6: 18006,
-    7: 590855,
-    9: 122803,
-    10: 2306085,
+const requiredPointDict = {
+    // this is accumulative
+    1: 20,
+    2: 62,
+    3: 128,
+    4: 220,
+    5: 340,
+    6: 490,
+    7: 690,
+    8: 955,
+    9: 1330,
+    10: 1825,
 };
 
 export const userSlice = createSlice({
@@ -59,13 +60,13 @@ export const userSlice = createSlice({
             switch (action.payload.case) {
                 case 'INCREMENT_EXP':
                     state.exp += action.payload.amount;
-                    state.currentPoint = state.exp - reuiqredPointDict[state.level - 1];
+                    state.currentPoint = state.exp - requiredPointDict[state.level - 1];
                     state.remainingPoint = state.requiredPointToNextLevel - state.currentPoint;
                     state.progress = state.currentPoint / state.requiredPointToNextLevel;
                     break;
                 case 'DECREMENT_EXP':
                     state.exp -= action.payload.amount;
-                    state.currentPoint = state.exp - reuiqredPointDict[state.level - 1];
+                    state.currentPoint = state.exp - requiredPointDict[state.level - 1];
                     state.remainingPoint = state.requiredPointToNextLevel - state.currentPoint;
                     state.progress = state.currentPoint / state.requiredPointToNextLevel;
                     break;
@@ -83,9 +84,21 @@ export const userSlice = createSlice({
                 state.isApiLoading = false;
                 const data = action.payload.fields;
                 state.exp = parseInt(data.momo_exp.integerValue);
-                state.level = parseInt(data.momo_level.integerValue);
-                state.requiredPointToNextLevel = reuiqredPointDict[state.level];
-                state.currentPoint = state.exp - reuiqredPointDict[state.level - 1];
+                for (const level in requiredPointDict) {
+                    if (requiredPointDict[level] > state.exp) {
+                        state.level = level;
+                        break;
+                    }
+                }
+                alert(state.level);
+                if (state.level > 1) {
+                    state.requiredPointToNextLevel = requiredPointDict[state.level] - requiredPointDict[state.level - 1];
+                    state.currentPoint = state.exp - requiredPointDict[state.level - 1];
+                }
+                else {
+                    state.requiredPointToNextLevel = requiredPointDict[state.level];
+                    state.currentPoint = state.exp;
+                }
                 state.remainingPoint = state.requiredPointToNextLevel - state.currentPoint;
                 state.progress = state.currentPoint / state.requiredPointToNextLevel;
                 state.wakeUpTime = Date.parse(data.wake_up_time.timestampValue) / 1000;
