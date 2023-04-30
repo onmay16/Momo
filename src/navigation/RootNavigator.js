@@ -11,7 +11,7 @@ import MainScreen from '../screens/MainScreen';
 import RoutineEditScreen from '../screens/RoutineEditScreen';
 import ChallengeScreen from '../screens/ChallengeScreen';
 import ClosetScreen from '../screens/ClosetScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 import LoginScreenAlpha from '../screens/LoginScreenAlpha';
 
 import { HomeTab } from '../components/NavigatorComponent/HomeTab';
