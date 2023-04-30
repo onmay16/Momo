@@ -29,10 +29,10 @@ export const SettingsScreen = () => {
                 <PretendardedText style={styles.header}>환경설정</PretendardedText>
                 <View style={styles.buttons}>
                     <ButtonLarge type={'default'} text={'66팀 이야기'} icon={false} action={test} />
-                    <ButtonLarge style={styles.button} type={'dark'} text={'모모스토리'} icon={false} action={test} />
-                    <ButtonLarge style={styles.button} type={'disabled'} text={'즉각 피드백'} icon={false} action={test} />
-                    <ButtonLarge style={styles.button} type={'light'} text={'출시 알림 받기'} icon={true} action={test} />
-                    <ButtonLarge style={styles.button} type={'red'} text={'로그아웃'} icon={false} action={logout} />
+                    <ButtonLarge type={'default'} text={'모모스토리'} icon={false} action={test} />
+                    <ButtonLarge type={'default'} text={'즉각 피드백'} icon={false} action={test} />
+                    <ButtonLarge type={'default'} text={'출시 알림 받기'} icon={true} action={test} />
+                    <ButtonLarge type={'red'} text={'로그아웃'} icon={false} action={logout} />
                 <View style={styles.toggleRow}>
                         <PretendardedText style={styles.toggleText}>사진으로 인증하기</PretendardedText>
                         <Switch
