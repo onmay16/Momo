@@ -24,16 +24,17 @@ function routineSerializer(payload) {
     const id = routine.name.match(/(r\w+)/g).at(-1);
     const fields = routine.fields;
     const duration = fields.duration.integerValue;
-    // TODO: remove unused vars if they're not needed
     const category = fields.category.stringValue;
     const routineName = fields.routine_name.stringValue;
     const difficulty = fields.difficulty.integerValue;
     const activeDay = fields.active_day.integerValue;
     const streak = fields.streak.integerValue;
     const complete = fields.finished.booleanValue;
+    const emoji = fields.emoji.stringValue;
     const routineObj = {
       id: id,
       name: routineName,
+      emoji: emoji,
       category: category,
       complete: complete,
       duration: parseInt(duration),
