@@ -5,7 +5,7 @@ const initialState = {
     isLoading: true,
     isApiLoading: false,
     error: null,
-    signedIn: false,
+    signedIn: true,
     momoActivated: false,
     streak: 0,
     level: 0,
@@ -96,7 +96,6 @@ export const userSlice = createSlice({
                         break;
                     }
                 }
-                alert(state.level);
                 if (state.level > 1) {
                     state.requiredPointToNextLevel = requiredPointDict[state.level] - requiredPointDict[state.level - 1];
                     state.currentPoint = state.exp - requiredPointDict[state.level - 1];
