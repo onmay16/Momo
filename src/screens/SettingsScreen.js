@@ -1,23 +1,12 @@
-import { StyleSheet, View, Switch, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+import React from 'react';
 
 import { PretendardedText } from '../components/CustomComponent/PretendardedText';
 import { ButtonLarge } from '../components/Buttons/ButtonLarge';
 
-import { logout } from '../redux/reducerSlices/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const SettingsScreen = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    const dispatch = useDispatch();
-
-    function logout() {
-        dispatch(logout());
-        AsyncStorage.clear();
-    }
+    // const [isEnabled, setIsEnabled] = useState(false);
+    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     function test() {
         alert('test')
@@ -32,8 +21,7 @@ export const SettingsScreen = () => {
                     <ButtonLarge type={'default'} text={'모모스토리'} icon={false} action={test} />
                     <ButtonLarge type={'default'} text={'즉각 피드백'} icon={false} action={test} />
                     <ButtonLarge type={'default'} text={'출시 알림 받기'} icon={true} action={test} />
-                    <ButtonLarge type={'red'} text={'로그아웃'} icon={false} action={logout} />
-                <View style={styles.toggleRow}>
+                    {/* <View style={styles.toggleRow}>
                         <PretendardedText style={styles.toggleText}>사진으로 인증하기</PretendardedText>
                         <Switch
                             trackColor={{ false: '#595959', true: '#3CE3AC' }}
@@ -42,7 +30,7 @@ export const SettingsScreen = () => {
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
-                    </View>
+                    </View> */}
                 </View>
             </SafeAreaView>
         </View>
@@ -61,7 +49,7 @@ const styles = StyleSheet.create({
     buttons: {
         width: '100%',
         alignItems: 'center',
-        flex: 0.85,
+        flex: 0.65,
         justifyContent: 'space-between',
         backgroundColor: '#F9F9F9',
     },
