@@ -5,11 +5,9 @@ import { useDispatch } from 'react-redux';
 import { openRoutineOptionModal } from '../redux/reducerSlices/modalSlice';
 import RoutineOptionModal from './Modals/RoutineOptionModal';
 
-import actionImg from '../assets/images/action_img.png';
 import settingImg from '../assets/images/settingButton.png';
 
 import DayList from './DayList';
-
 
 export const ActionBox = (props) => {
   const dispatch = useDispatch();
@@ -32,13 +30,13 @@ export const ActionBox = (props) => {
         <Image source={actionImg} style={{marginLeft: 14, marginRight: 15}} />
         <View>
           <Text style={{fontWeight: '700', fontSize: 16, color: '#4C4C4C'}}>
-            {props.name}
+            {props.emoji} {props.name}
             <Text style={{fontWeight: '600', fontSize: 16, color: '#808080'}}>
               {' '}
               +{props.limit_time}분
             </Text>
           </Text>
-          <View style={{flexDirection: 'row', paddingTop: 5}}>
+          <View style={{ flexDirection: 'row', paddingTop: 5 }}>
             <DayList id={props.id} active_day={props.active_day} />
           </View>
         </View>

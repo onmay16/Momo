@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { ActionBox } from '../components/ActionBox';
 import RoutineAddButton from '../components/RoutineAddButton';
@@ -11,29 +12,18 @@ import { RoutineAddModal } from '../components/RoutineAddModal';
 import { RoutineAddListModal } from '../components/RoutineAddList/RoutineAddListModal';
 
 const RoutineScreen = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [state, setState] = useState({
-    totalRoutineTime: 30,
-    wakeUpTime: '08:20',
-    endTime: '08:50',
-  });
-
-  const [actionList, setActionList] = useState([
-    {id: 1, name: '물 마시기', type: 'living', limit_time: 5, active_day: 127},
-    {id: 2, name: '요가', type: 'living', limit_time: 15, active_day: 3},
-    {id: 3, name: '일본어 공부', type: 'self improvement', limit_time: 20, active_day: 127},
-    {id: 4, name: '명상', type: 'living', limit_time: 5, active_day: 84},
-    {id: 5, name: '영양제', type: 'living', limit_time: 1, active_day: 72},
-  ]);
+  const userRoutineState = useSelector(state => state.userRoutineSlice);
+  const actionList = userRoutineState.userRoutineActionList;
 
   const renderActionList = (action) => (
     <ActionBox
       id={action.id}
       name={action.name}
+      emoji={action.emoji}
       complete={action.complete}
-      limit_time={action.limit_time}
-      active_day={action.active_day}
+      limit_time={action.duration}
+      active_day={action.activeDay}
     />
   );
   return (
@@ -44,7 +34,7 @@ const RoutineScreen = () => {
           <Text style={{fontSize: 16, fontWeight: '700'}}>마이 루틴</Text>
         </View>
 
-        <TotalRoutineBox state={state} />
+        <TotalRoutineBox/>
 
         <View style={styles.routineListContainer}>
           <ScrollView width="100%" showsVerticalScrollIndicator={false}>

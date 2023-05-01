@@ -1,8 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-
-const DAYS_OF_WEEK = ['월', '화', '수', '목', '금', '토', '일']
+const DAYS_OF_WEEK = ['월', '화', '수', '목', '금', '토', '일'];
 
 const DayList = (props) => {
   const [activeDays, setActiveDays] = useState(Array(7).fill(false));
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     width: 20,
     height: 20,
-    borderRadius: 3
+    borderRadius: 3,
   },
 });
 
