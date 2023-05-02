@@ -24,7 +24,7 @@ const RoutineAddButton = () => {
     } else {
       setWakeUpMin(wakeUp.getMinutes());
     }
-    const complete = new Date(userState.CompleteTime * 1000);
+    const complete = new Date(userState.completeTime * 1000);
     if (complete.getHours() < 10) {
       setCompleteHour('0'.concat(complete.getHours()));
     } else {
@@ -52,7 +52,7 @@ const RoutineAddButton = () => {
             <View style={{ flex: 1 }}>
               <Text
                 style={{ marginLeft: 20, fontSize: 40, fontWeight: '900', color: '#3CE3AC' }}>
-                +{Math.floor((userState.CompleteTime - userState.wakeUpTime) / (60))}
+                +{Math.floor((userState.completeTime - userState.wakeUpTime) / (60))}
                 <Text
                   style={{ marginLeft: 20, fontSize: 40, fontWeight: '500', color: '#222222' }}>
                   분
