@@ -27,8 +27,7 @@ export const ActionBox = (props) => {
   return (
     <View key={String(props.id)} style={styles.actionBoxContainer}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image source={actionImg} style={{marginLeft: 14, marginRight: 15}} />
-        <View>
+        <View style={{ marginLeft: 15 }}>
           <Text style={{fontWeight: '700', fontSize: 16, color: '#4C4C4C'}}>
             {props.emoji} {props.name}
             <Text style={{fontWeight: '600', fontSize: 16, color: '#808080'}}>
