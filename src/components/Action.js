@@ -17,7 +17,7 @@ const Action = (props) => {
     const routine = routineListState.find(r => r.id === props.id);
 
     function handleCompleteStatus(action) {
-        const amount = (9 + routine.streak) * routine.difficulty
+        const amount = (9 + routine.streak) * routine.difficulty;
         if (!routine.complete) {
             dispatch(updateExp({ case: 'INCREMENT_EXP', amount: amount }));
             props.setAnimatedPoint(amount);
@@ -32,7 +32,6 @@ const Action = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
-                <Image source={actionImg} style={styles.actionImage} />
                 <PretendardedText style={styles.actionName}>{routine.name}</PretendardedText>
             </View>
             <Pressable onPress={() => handleCompleteStatus(props.id)}>
@@ -47,6 +46,5 @@ export default Action;
 const styles = StyleSheet.create({
     container: { width: '100%', height: 92, backgroundColor: '#fff', borderRadius: 12, borderWidth: 1.5, borderColor: '#eee', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
     left: { flexDirection: 'row', alignItems: 'center' },
-    actionImage: { marginLeft: 14, marginRight: 20 },
-    actionName: { fontWeight: '700', fontSize: 16, color: '#4C4C4C' },
+    actionName: { fontWeight: '700', fontSize: 16, color: '#4C4C4C', marginLeft: 14 },
 });
