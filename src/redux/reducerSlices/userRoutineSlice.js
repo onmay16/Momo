@@ -82,7 +82,7 @@ export const userRoutineSlice = createSlice({
       const dataBody = {
         fields: {
           finished: {
-            booleanValue: true,
+            booleanValue: newArray[index].complete,
           },
           streak: {
             integerValue: newArray[index].streak,
