@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 
 import Action from '../Action';
 import { Point } from '../CustomComponent/Point';
+import { Momo } from './Momo';
 
 //TO-DO: replace momo.png with sleeping momo gif
-import Dust from '../../assets/character/1_dust.svg';
 import CurrentPointFire from '../../assets/images/currentPointFire.svg';
 import RemainingPointFire from '../../assets/images/remainingPointFire.svg';
 
@@ -69,7 +69,7 @@ export const ActiveMain = () => {
                     <Point amount={animatedPoint}/>
                 </Animated.View>
                 <View style={styles.momo}>
-                    <Dust/>
+                    <Momo/>
                 </View>
                 <View style={styles.currentPointContainer}>
                     <PretendardedText style={styles.currentPoint}>{Math.floor(userState.currentPoint / userState.requiredPointToNextLevel * 100)}% </PretendardedText>
@@ -112,7 +112,7 @@ export const ActiveMain = () => {
 const styles = StyleSheet.create({
     container: { flex: 6, marginLeft: 30, marginRight: 30 },
     progressArea: { flex: 1, marginRight: 39, marginLeft: 39, marginBottom: 29 },
-    momo: { flex: this.momoActivated ? (Platform.OS === 'ios' ? 1 : 0.5) : (Platform.OS === 'ios' ? 4 : 3), justifyContent: 'center', alignItems: 'center' },
+    momo: { flex: this.momoActivated ? (Platform.OS === 'ios' ? 1 : 0.5) : (Platform.OS === 'ios' ? 4 : 3), justifyContent: 'center', alignItems: 'center', zIndex: -1 },
     currentPointContainer: { flexDirection: 'row', marginBottom: 3, alignItems: 'center' },
     currentPoint: { fontWeight: '700', fontSize: 14, color: '#3CE3AC', marginRight: 2 },
     remainingPointContainer: { flexDirection: 'row', marginTop: 3, alignItems: 'center', justifyContent: 'flex-end' },

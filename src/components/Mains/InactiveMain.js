@@ -8,9 +8,7 @@ import { activateMomo } from '../../redux/reducerSlices/userSlice';
 
 import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
-
-//TODO: replace momo.png with sleeping momo gif
-import Dust from '../../assets/character/1_dust.svg';
+import { Momo } from './Momo';
 
 export const InactiveMain = () => {
     const dispatch = useDispatch();
@@ -37,7 +35,7 @@ export const InactiveMain = () => {
     return (
         <View style={{ flex: 6 }}>
             <View style={customStyles(userState.momoActivated).momo}>
-                <Dust />
+                <Momo/>
             </View>
             <Animated.View style={{opacity: opacity}}>
                 <PretendardedText style={styles.todayRoutine}>오늘의 루틴</PretendardedText>
