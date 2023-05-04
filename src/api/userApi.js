@@ -27,6 +27,27 @@ export const getUserRoutine = async () => {
     return response;
 };
 
+export const patchUser = async(data, updateMask) => {
+  let updateMaskParam = '';
+  updateMask.forEach(field => {
+    updateMaskParam = updateMaskParam.concat('updateMask.fieldPaths=', field, '&');
+  });
+  const response = await axios.patch(
+    `${FIRESTORE_API_URL}${PROJECT_ID}/databases/(default)/documents/User_Collection/user1?${updateMaskParam}`,
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then((res) => {
+    return res;
+  }).catch((error) => {
+    return error(error);
+  });
+  return response;
+};
+
 export const patchIndividualUserRoutine = async (routineId, data, updateMask) => {
   let updateMaskParam = '';
   updateMask.forEach(field => {
