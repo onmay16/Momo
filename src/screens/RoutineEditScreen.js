@@ -44,7 +44,7 @@ const RoutineScreen = () => {
           <RoutineAddButton/>
           <RoutineAddModal/>
           <RoutineAddListModal isTutorial={false}/>
-        </View>  
+        </View>
       </SafeAreaView>
     </View>
   );
