@@ -1,18 +1,8 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, { useEffect, useState } from 'react';
 
 const DAYS_OF_WEEK = ['월', '화', '수', '목', '금', '토', '일'];
 
 const DayList = (props) => {
-  const [activeDays, setActiveDays] = useState(Array(7).fill(false));
-
-  useEffect(() => {
-    const binaryString = props.active_day.toString(2).padStart(7, '0');
-
-    setActiveDays(
-      binaryString.split('').map((digit) => digit === '1')
-    );
-  }, []);
 
   const getContainerStyles = (isActive, position) => {
     const borderRadius = {
@@ -28,8 +18,8 @@ const DayList = (props) => {
   return (
     <View style={{flexDirection: 'row'}}>
       {DAYS_OF_WEEK.map((day, index) => (
-        <View key={index} style={getContainerStyles(activeDays[index], index + 1)}>
-          <Text style={{fontSize: 11.67, fontWeight: '600', color: activeDays[index] ? '#FFFFFF' : '#B3B3B3' }}>
+        <View key={index} style={getContainerStyles(props.active_day[index], index + 1)}>
+          <Text style={{fontSize: 11.67, fontWeight: '600', color: props.active_day[index] ? '#FFFFFF' : '#B3B3B3' }}>
             {day}
           </Text>
         </View>

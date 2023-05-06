@@ -28,10 +28,15 @@ function routineSerializer(payload) {
     const category = fields.category.stringValue;
     const routineName = fields.routine_name.stringValue;
     const difficulty = fields.difficulty.integerValue;
-    const activeDay = fields.active_day.integerValue;
     const streak = fields.streak.integerValue;
     const complete = fields.finished.booleanValue;
     const emoji = fields.emoji.stringValue;
+    let activeDay = Array(7).fill(false);
+    const binaryString = parseInt(fields.active_day.integerValue).toString(2).padStart(7, '0');
+    activeDay = binaryString.split('').map((digit) => digit === '1');
+    const today = new Date().getDay();
+    const isActiveToday = activeDay[(today + 7) % 8];
+
     const routineObj = {
       id: id,
       name: routineName,
@@ -41,7 +46,8 @@ function routineSerializer(payload) {
       duration: parseInt(duration),
       difficulty: parseInt(difficulty),
       streak: parseInt(streak),
-      activeDay: parseInt(activeDay),
+      activeDay: activeDay,
+      isActiveToday: isActiveToday,
     };
     userRoutineActionList.push(routineObj);
   }

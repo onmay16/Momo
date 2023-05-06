@@ -100,8 +100,8 @@ export const ActiveMain = () => {
             </View>
             <View style={styles.actionsList}>
                 <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
-                    {userRoutineState.userRoutineActionList.map((action) => (
-                        <Action id={action.id} setAnimatedPoint={setAnimatedPoint} pointAnimation={pointAnimation}/>
+                    {userRoutineState.userRoutineActionList.map((action, index) => ( action.isActiveToday ?
+                        <Action key={index} id={action.id} setAnimatedPoint={setAnimatedPoint} pointAnimation={pointAnimation}/> : null
                     ))}
                 </ScrollView>
             </View>
