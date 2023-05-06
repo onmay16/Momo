@@ -5,7 +5,7 @@ const initialState = {
     isLoading: true,
     isApiLoading: false,
     error: null,
-    signedIn: true,
+    signedIn: false,
     momoActivated: false,
     streak: 0,
     level: 0,
