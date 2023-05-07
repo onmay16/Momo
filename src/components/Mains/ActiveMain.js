@@ -2,7 +2,9 @@ import { StyleSheet, View, Animated, Dimensions, Platform, ScrollView } from 're
 import React, { useEffect, useRef, useState } from 'react';
 import * as Progress from 'react-native-progress';
 import { PretendardedText } from '../CustomComponent/PretendardedText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setRemainingTime } from '../../redux/reducerSlices/userSlice';
 
 import Action from '../Action';
 import { Point } from '../CustomComponent/Point';
@@ -13,6 +15,7 @@ import CurrentPointFire from '../../assets/images/currentPointFire.svg';
 import RemainingPointFire from '../../assets/images/remainingPointFire.svg';
 
 export const ActiveMain = () => {
+    const dispatch = useDispatch();
     const userState = useSelector(state => state.user);
     const userRoutineState = useSelector(state => state.userRoutineSlice);
 
@@ -62,6 +65,15 @@ export const ActiveMain = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (userState.remainingTime > 0) {
+            const id = setInterval(() => {
+                dispatch(setRemainingTime());
+            }, 30000);
+            return () => clearInterval(id);
+        }
+    }, []);
+
     return (
         <Animated.View style={[styles.container, { opacity: opacity }]}>
             <View style={styles.progressArea}>
@@ -94,7 +106,7 @@ export const ActiveMain = () => {
                 <PretendardedText style={styles.todayRoutine}>오늘의 루틴</PretendardedText>
                 <View style={styles.remainingTimeContainer}>
                     <PretendardedText style={styles.remainingTimeText}>마칠 시간까지 </PretendardedText>
-                    <PretendardedText style={styles.remainingTime}>{userRoutineState.remainingTime}</PretendardedText>
+                    <PretendardedText style={styles.remainingTime}>{userState.remainingTime}</PretendardedText>
                     <PretendardedText style={styles.remainingTimeText}>분</PretendardedText>
                 </View>
             </View>
