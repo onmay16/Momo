@@ -3,21 +3,22 @@ import {getUserBasic, patchUser} from '../../api/userApi';
 
 const initialState = {
   UUID: '',
-  isLoading: true,
-  isApiLoading: false,
-  error: null,
-  signedIn: false,
-  momoActivated: false,
-  streak: 0,
-  level: 0,
-  exp: 0,
-  requiredPointToNextLevel: 0,
-  currentPoint: 0,
-  remainingPoint: 0,
-  progress: 0,
-  wakeUpTime: null,
-  completeTime: null,
-  isTutorialFinished: false,
+    isLoading: true,
+    isApiLoading: false,
+    error: null,
+    signedIn: false,
+    momoActivated: false,
+    streak: 0,
+    level: 0,
+    exp: 0,
+    requiredPointToNextLevel: 0,
+    currentPoint: 0,
+    remainingPoint: 0,
+    progress: 0,
+    wakeUpTime: null,
+    completeTime: null,
+    remainingTime: null,
+    isTutorialFinished: false,
 };
 
 const requiredPointDict = {
@@ -115,10 +116,53 @@ export const userSlice = createSlice({
         },
       };
 
-      patchUser(dataBody, ['momo_exp']);
+            patchUser(dataBody, ['momo_exp']);
+        },
+        setWakeUpTime: (state, action) => {
+            state.wakeUpTime = action.payload.wakeUpTime;
+        },
+        setCompleteTime: (state, action) => {
+            state.completeTime = action.payload.completeTime;
+        },
+        setRemainingTime: (state) => {
+            const completeTime = new Date(state.completeTime);
+            const currentTime = new Date();
+            currentTime.setFullYear(completeTime.getFullYear());
+            currentTime.setMonth(completeTime.getMonth());
+            currentTime.setDate(completeTime.getDate());
+            state.remainingTime = Math.round((Date.parse(completeTime) - Date.parse(currentTime)) / 1000 / 60);
+        },
+        setIsTutorialFinished: (state, action) => {
+            state.isTutorialFinished = action.payload.isTutorialFinished;
+        },
     },
-    setWakeUpTime: (state, action) => {
-      state.wakeUpTime = action.payload.wakeUpTime;
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchUserBasic.pending, (state) => {
+                state.isApiLoading = true;
+            })
+            .addCase(fetchUserBasic.fulfilled, (state, action) => {
+                state.isApiLoading = false;
+                const data = action.payload.fields;
+                state.exp = parseInt(data.momo_exp.integerValue);
+                state.level = updateLevel(state.exp);
+                state.requiredPointToNextLevel = updateRequiredPointToNextLevel(state.level);
+                state.currentPoint = updateCurrentPoint(state.level, state.exp);
+                state.remainingPoint = state.requiredPointToNextLevel - state.currentPoint;
+                state.progress = state.currentPoint / state.requiredPointToNextLevel;
+                state.wakeUpTime = new Date(data.wake_up_time.timestampValue);
+                state.completeTime = new Date(data.routine_complete_time.timestampValue);
+                const completeTime = new Date(state.completeTime);
+                const currentTime = new Date();
+                currentTime.setFullYear(completeTime.getFullYear());
+                currentTime.setMonth(completeTime.getMonth());
+                currentTime.setDate(completeTime.getDate());
+                state.remainingTime = Math.round((Date.parse(completeTime) - Date.parse(currentTime)) / 1000 / 60);
+            })
+            .addCase(fetchUserBasic.rejected, (state, action) => {
+                state.isApiLoading = false;
+                state.error = action.error.message;
+            });
     },
     setCompleteTime: (state, action) => {
       state.completeTime = action.payload.completeTime;
@@ -164,6 +208,7 @@ export const {
   updateExp,
   setWakeUpTime,
   setCompleteTime,
+  setRemainingTime,
   setIsTutorialFinished,
 } = userSlice.actions;
 export default userSlice.reducer;
