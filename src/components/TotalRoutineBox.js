@@ -13,7 +13,7 @@ const RoutineAddButton = () => {
   const [completeMin, setCompleteMin] = useState();
 
   useEffect(() => {
-    const wakeUp = new Date(userState.wakeUpTime * 1000);
+    const wakeUp = userState.wakeUpTime;
     if (wakeUp.getHours() < 10) {
       setWakeUpHour('0'.concat(wakeUp.getHours()));
     } else {
@@ -24,7 +24,7 @@ const RoutineAddButton = () => {
     } else {
       setWakeUpMin(wakeUp.getMinutes());
     }
-    const complete = new Date(userState.completeTime * 1000);
+    const complete = userState.completeTime;
     if (complete.getHours() < 10) {
       setCompleteHour('0'.concat(complete.getHours()));
     } else {
@@ -52,7 +52,7 @@ const RoutineAddButton = () => {
             <View style={{ flex: 1 }}>
               <Text
                 style={{ marginLeft: 20, fontSize: 40, fontWeight: '900', color: '#3CE3AC' }}>
-                +{Math.floor((userState.completeTime - userState.wakeUpTime) / (60))}
+                +{Math.round((Date.parse(userState.completeTime) - Date.parse(userState.wakeUpTime)) / 1000 / 60)}
                 <Text
                   style={{ marginLeft: 20, fontSize: 40, fontWeight: '500', color: '#222222' }}>
                   분
