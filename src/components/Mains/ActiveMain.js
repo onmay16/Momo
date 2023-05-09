@@ -104,11 +104,17 @@ export const ActiveMain = () => {
             </View>
             <View style={styles.todayRoutineContainer}>
                 <PretendardedText style={styles.todayRoutine}>오늘의 루틴</PretendardedText>
+                {userState.remainingTime >= 0 ?
                 <View style={styles.remainingTimeContainer}>
                     <PretendardedText style={styles.remainingTimeText}>마칠 시간까지 </PretendardedText>
-                    <PretendardedText style={styles.remainingTime}>{userState.remainingTime}</PretendardedText>
+                    <PretendardedText style={customSytles(userState.remainingTime).remainingTime}>{userState.remainingTime}</PretendardedText>
                     <PretendardedText style={styles.remainingTimeText}>분</PretendardedText>
-                </View>
+                </View> :
+                <View style={styles.remainingTimeContainer}>
+                    <PretendardedText style={styles.remainingTimeText}>마칠 시간 </PretendardedText>
+                    <PretendardedText style={customSytles(userState.remainingTime).remainingTime}>{-userState.remainingTime}</PretendardedText>
+                    <PretendardedText style={styles.remainingTimeText}>분 초과</PretendardedText>
+                </View>}
             </View>
             <View style={styles.actionsList}>
                 <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false}>
@@ -132,7 +138,10 @@ const styles = StyleSheet.create({
     todayRoutine: { fontWeight: '600', fontSize: 16, color: '#4C4C4C' },
     remainingTimeContainer: { flexDirection: 'row', alignItems: 'center' },
     remainingTimeText: { fontSize: 14, color: '#808080', fontWeight: '500' },
-    remainingTime: { fontSize: 14, color: '#3CE3AC', fontWeight: '600' },
     remainingPoint: { fontWeight: '400', fontSize: 12, color: '#B3B3B3' },
     actionsList: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+});
+
+const customSytles = (remainingTime) => StyleSheet.create({
+    remainingTime: { fontSize: 14, color: remainingTime >= 0 ? '#3CE3AC' : '#FF6056', fontWeight: '600' },
 });
