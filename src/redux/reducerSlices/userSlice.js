@@ -16,6 +16,7 @@ const initialState = {
     progress: 0,
     wakeUpTime: null,
     completeTime: null,
+    remainingTime: null,
     isTutorialFinished: false,
 };
 
