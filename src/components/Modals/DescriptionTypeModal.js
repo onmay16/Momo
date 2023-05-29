@@ -62,6 +62,13 @@ export const DescriptionTypeModal = (props) => {
     dispatch(closeDescriptionTypeModal());
   }
 
+  function rightButtonActionFun() {
+    setTimeout(() => {
+      props.rightButtonAction();
+      closeModal();
+    }, 200);
+  }
+
   useEffect(() => {
     if (props.type === 'overTimeModal') {
       setCurrentModalState(overTimeModal);
@@ -102,7 +109,7 @@ export const DescriptionTypeModal = (props) => {
               </Pressable>
               <Pressable
                 style={[modalStyles.button, customSytles(currentModalState.hasCancel, props.type === 'breakModal').rightButton]}
-                onPress={props.rightButtonAction ? () => props.rightButtonAction() : closeModal}>
+                onPress={props.rightButtonAction ? rightButtonActionFun : closeModal}>
                 <PretendardedText style={customSytles(currentModalState.hasCancel, props.type === 'breakModal').rightButtonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
