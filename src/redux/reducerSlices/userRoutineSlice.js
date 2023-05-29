@@ -6,6 +6,10 @@ const initialState = {
   isLoading: false,
   error: null,
   remainingTime: 0,
+  numberOfReaminingRoutines: 0,
+  numberOfCompleteRoutines: 0,
+  pointSumOfReaminingRoutines: 0,
+  pointSumOfCompleteRoutines: 0,
 };
 
 export const fetchUserRoutine = createAsyncThunk(
@@ -54,6 +58,26 @@ function routineSerializer(payload) {
   return userRoutineActionList;
 }
 
+function countRoutines(array, key, value) {
+  let count = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][key] === value && array[i].isActiveToday) {
+      count++;
+    }
+  }
+  return count;
+}
+
+function calculatePoints(array, key, value) {
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][key] === value && array[i].isActiveToday) {
+      sum += (9 + array[i].streak) * array[i].difficulty;
+    }
+  }
+  return sum;
+}
+
 function calculateDuration(array) {
   const total = array.reduce((accumulator, object) => {
     if (!object.complete) {
@@ -72,16 +96,27 @@ export const userRoutineSlice = createSlice({
       const index = state.userRoutineActionList.findIndex(routine => routine.id === action.payload);
       const newArray = [...state.userRoutineActionList];
       const currentStrike = newArray[index].streak;
-
       if (!newArray[index].complete) {
+        state.pointSumOfReaminingRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
+        state.pointSumOfCompleteRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
         state.remainingTime -= newArray[index].duration;
         newArray[index].streak += 1;
+        state.numberOfReaminingRoutines -= 1;
+        state.numberOfCompleteRoutines += 1;
       } else if (newArray[index].streak > 0) {
+        state.pointSumOfReaminingRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
+        state.pointSumOfCompleteRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
         state.remainingTime += newArray[index].duration;
         newArray[index].streak -= 1;
+        state.numberOfReaminingRoutines += 1;
+        state.numberOfCompleteRoutines -= 1;
       } else {
-        state.remainingTime += newArray[index].duration;
         newArray[index].streak = currentStrike;
+        state.pointSumOfReaminingRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
+        state.pointSumOfCompleteRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
+        state.numberOfReaminingRoutines += 1;
+        state.numberOfCompleteRoutines -= 1;
+        state.remainingTime += newArray[index].duration;
       }
       newArray[index].complete = !newArray[index].complete;
 
@@ -101,7 +136,7 @@ export const userRoutineSlice = createSlice({
     deleteRoutine: (state, action) => {
       const routineId = action.payload;
       state.userRoutineActionList = state.userRoutineActionList.filter(routine => routine.id !== routineId);
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -112,6 +147,10 @@ export const userRoutineSlice = createSlice({
         state.isLoading = false;
         state.userRoutineActionList = routineSerializer(action.payload);
         state.remainingTime = calculateDuration(state.userRoutineActionList);
+        state.numberOfReaminingRoutines = countRoutines(state.userRoutineActionList, 'complete', false);
+        state.numberOfCompleteRoutines = countRoutines(state.userRoutineActionList, 'complete', true);
+        state.pointSumOfReaminingRoutines = calculatePoints(state.userRoutineActionList, 'complete', false);
+        state.pointSumOfCompleteRoutines = calculatePoints(state.userRoutineActionList, 'complete', true);
       })
       .addCase(fetchUserRoutine.rejected, (state, action) => {
         state.isLoading = false;
@@ -120,8 +159,8 @@ export const userRoutineSlice = createSlice({
   },
 });
 
-export const { 
+export const {
   updateRoutineStatus,
-  deleteRoutine, 
+  deleteRoutine,
 } = userRoutineSlice.actions;
 export default userRoutineSlice.reducer;
