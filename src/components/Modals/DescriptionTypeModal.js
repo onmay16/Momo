@@ -27,15 +27,6 @@ export const DescriptionTypeModal = (props) => {
     rightButtonText: '네, 완료할게요.',
     hasCancel: false,
   };
-  const photoModal = {
-    title: '사진 인증!',
-    description1: '루틴을 완료한 순간을\n사진으로 찍어 인증하면',
-    boldText: '열정 포인트',
-    description2: '를 더 받을 수 있어요!',
-    leftButtonText: '괜찮아요.',
-    rightButtonText: '좋아요!',
-    hasCancel: true,
-  };
   const routineStartModal = {
     title: '루틴을 시작할까요?',
     description1: '오늘 하를 시작할\n준비가 되었다면',

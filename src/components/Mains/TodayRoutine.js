@@ -1,13 +1,14 @@
-import { StyleSheet, ScrollView, View, Animated, Pressable } from "react-native";
-import React, { useEffect, useRef, useState } from 'react';
+import { StyleSheet, ScrollView, View, Animated, Pressable } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { openDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
-import { setRemainingTime, finishRoutine } from '../../redux/reducerSlices/userSlice';
+import { finishRoutine } from '../../redux/reducerSlices/userSlice';
 
 import Action from '../Action';
 import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
+import { PhotoModal } from '../Modals/PhotoModal';
 
 export const TodayRoutine = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export const TodayRoutine = () => {
         </ScrollView>
       </View>
       <DescriptionTypeModal type={'breakModal'} rightButtonAction={finishRoutineFun} />
+      <PhotoModal/>
     </View>
   );
 };

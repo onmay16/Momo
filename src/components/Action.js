@@ -1,13 +1,13 @@
 import { StyleSheet, View, Image, Pressable } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateRoutineStatus } from '../redux/reducerSlices/userRoutineSlice';
 import { updateExp } from '../redux/reducerSlices/userSlice';
+import { setPhotoModalStatus } from '../redux/reducerSlices/modalSlice';
 
 import { PretendardedText } from './CustomComponent/PretendardedText';
 
-import actionImg from '../assets/images/action_img.png';
 import incompleteAction from '../assets/images/action_incomplete.png';
 import completeAction from '../assets/images/action_complete.png';
 
@@ -22,6 +22,9 @@ const Action = (props) => {
             dispatch(updateExp({ case: 'INCREMENT_EXP', amount: amount }));
             props.setAnimatedPoint(amount);
             props.pointAnimation();
+            dispatch(setPhotoModalStatus({
+                status: true,
+            }));
         } else {
             dispatch(updateExp({ case: 'DECREMENT_EXP', amount: amount }));
             props.setAnimatedPoint(0);
