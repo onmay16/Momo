@@ -2,12 +2,11 @@ import { StyleSheet, ScrollView, View, Animated, Pressable } from 'react-native'
 import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { openDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
-import { finishRoutine } from '../../redux/reducerSlices/userSlice';
+import { setBreakModalStatus } from '../../redux/reducerSlices/modalSlice';
 
 import Action from '../Action';
 import { PretendardedText } from '../CustomComponent/PretendardedText';
-import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
+import { RoutineBreakModal } from '../Modals/RoutineBreakModal';
 import { PhotoModal } from '../Modals/PhotoModal';
 
 export const TodayRoutine = () => {
@@ -20,7 +19,9 @@ export const TodayRoutine = () => {
   const pointY = useRef(new Animated.Value(100)).current;
 
   function openModal() {
-    dispatch(openDescriptionTypeModal());
+    dispatch(setBreakModalStatus({
+      status: true,
+    }));
   }
 
   function pointAnimation() {
@@ -50,10 +51,6 @@ export const TodayRoutine = () => {
     }, 2000);
   }
 
-  function finishRoutineFun() {
-    dispatch(finishRoutine());
-}
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.actionsList}>
@@ -66,8 +63,8 @@ export const TodayRoutine = () => {
           </Pressable>
         </ScrollView>
       </View>
-      <DescriptionTypeModal type={'breakModal'} rightButtonAction={finishRoutineFun} />
-      <PhotoModal/>
+      <RoutineBreakModal/>
+      <PhotoModal />
     </View>
   );
 };

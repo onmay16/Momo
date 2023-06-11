@@ -7,6 +7,7 @@ const initialState = {
   descriptionTypeModal: false,
   pairTypeModal: false,
   photoModal: false,
+  breakModal: false,
   routineOptionModal: false,
   routineTimePickerModal: false,
   routineOptionModalPositionX: -1,
@@ -72,6 +73,9 @@ export const modalSlice = createSlice({
     setPhotoModalStatus: (state, action) => {
       state.photoModal = action.payload.status;
     },
+    setBreakModalStatus: (state, action) => {
+      state.breakModal = action.payload.status;
+    },
   },
 });
 
@@ -91,6 +95,7 @@ export const {
   nextStepRoutineAddList,
   backStepRoutineAddList,
   setPhotoModalStatus,
+  setBreakModalStatus,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
