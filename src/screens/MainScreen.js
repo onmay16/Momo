@@ -9,7 +9,7 @@ import { fetchUserBasic } from '../redux/reducerSlices/userSlice';
 import { PretendardedText } from '../components/CustomComponent/PretendardedText';
 import { ActiveMain } from '../components/Mains/ActiveMain';
 import { InactiveMain } from '../components/Mains/InactiveMain';
-import Notification from '../components/Notification';
+// import Notification from '../components/Notification';
 
 import BackgroundImg from '../assets/images/bg_main.png';
 
@@ -42,7 +42,7 @@ const MainScreen = () => {
                                 </View>
                                 <PretendardedText style={styles.textSecondRow}>루틴 진행 중!</PretendardedText>
                             </View>
-                            <Notification />
+                            {/* <Notification /> */}
                         </View>
                         {userState.momoActivated ? <ActiveMain /> : <InactiveMain />}
                     </ImageBackground>
