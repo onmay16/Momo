@@ -97,32 +97,15 @@ export const userRoutineSlice = createSlice({
     updateRoutineStatus: (state, action) => {
       const index = state.userRoutineActionList.findIndex(routine => routine.id === action.payload);
       const newArray = [...state.userRoutineActionList];
-      const currentStrike = newArray[index].streak;
-      if (!newArray[index].complete) {
-        state.pointSumOfReaminingRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.pointSumOfCompleteRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.remainingTime -= newArray[index].duration;
-        newArray[index].streak += 1;
-        state.numberOfReaminingRoutines -= 1;
-        state.numberOfCompleteRoutines += 1;
-        const currentTime = new Date();
-        newArray[index].executionTime = Math.round((Date.parse(currentTime) - Date.parse(state.recentActionStartTime)) / 1000 / 60);
-        state.recentActionStartTime = new Date();
-      } else if (newArray[index].streak > 0) {
-        state.pointSumOfReaminingRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.pointSumOfCompleteRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.remainingTime += newArray[index].duration;
-        newArray[index].streak -= 1;
-        state.numberOfReaminingRoutines += 1;
-        state.numberOfCompleteRoutines -= 1;
-      } else {
-        newArray[index].streak = currentStrike;
-        state.pointSumOfReaminingRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.pointSumOfCompleteRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
-        state.numberOfReaminingRoutines += 1;
-        state.numberOfCompleteRoutines -= 1;
-        state.remainingTime += newArray[index].duration;
-      }
+      state.pointSumOfReaminingRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
+      state.pointSumOfCompleteRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
+      state.remainingTime -= newArray[index].duration;
+      newArray[index].streak += 1;
+      state.numberOfReaminingRoutines -= 1;
+      state.numberOfCompleteRoutines += 1;
+      const currentTime = new Date();
+      newArray[index].executionTime = Math.round((Date.parse(currentTime) - Date.parse(state.recentActionStartTime)) / 1000 / 60);
+      state.recentActionStartTime = new Date();
       newArray[index].complete = !newArray[index].complete;
 
       // update individual user routine's finished status & streak
@@ -136,14 +119,14 @@ export const userRoutineSlice = createSlice({
           },
         },
       };
-      patchIndividualUserRoutine(newArray[index].id, dataBody, ['finished','streak']);
+      patchIndividualUserRoutine(newArray[index].id, dataBody, ['finished', 'streak']);
     },
     deleteRoutine: (state, action) => {
       const routineId = action.payload;
       state.userRoutineActionList = state.userRoutineActionList.filter(routine => routine.id !== routineId);
     },
     setRecentActionStartTime: (state, action) => {
-      state.recentActionStartTime  = action.payload.time;
+      state.recentActionStartTime = action.payload.time;
     },
   },
   extraReducers: (builder) => {

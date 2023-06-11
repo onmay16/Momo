@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateRoutineStatus } from '../redux/reducerSlices/userRoutineSlice';
 import { updateExp } from '../redux/reducerSlices/userSlice';
-import { setPhotoModalStatus } from '../redux/reducerSlices/modalSlice';
+// import { setPhotoModalStatus } from '../redux/reducerSlices/modalSlice';
 
 import { PretendardedText } from './CustomComponent/PretendardedText';
 
@@ -19,17 +19,14 @@ const Action = (props) => {
     function handleCompleteStatus(action) {
         const amount = (9 + routine.streak) * routine.difficulty;
         if (!routine.complete) {
-            dispatch(updateExp({ case: 'INCREMENT_EXP', amount: amount }));
+            dispatch(updateExp({ amount: amount }));
             props.setAnimatedPoint(amount);
             props.pointAnimation();
-            dispatch(setPhotoModalStatus({
-                status: true,
-            }));
-        } else {
-            dispatch(updateExp({ case: 'DECREMENT_EXP', amount: amount }));
-            props.setAnimatedPoint(0);
+            // dispatch(setPhotoModalStatus({
+            //     status: true,
+            // }));
+            dispatch(updateRoutineStatus(action));
         }
-        dispatch(updateRoutineStatus(action));
     }
 
     return (
