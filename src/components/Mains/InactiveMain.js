@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { openDescriptionTypeModal } from '../../redux/reducerSlices/modalSlice';
 import { activateMomo } from '../../redux/reducerSlices/userSlice';
+import { setRecentActionStartTime } from '../../redux/reducerSlices/userRoutineSlice';
 
 import { PretendardedText } from '../CustomComponent/PretendardedText';
 import { DescriptionTypeModal } from '../Modals/DescriptionTypeModal';
@@ -29,6 +30,9 @@ export const InactiveMain = () => {
         }
         setTimeout(() => {
             dispatch(activateMomo());
+            dispatch(setRecentActionStartTime({
+                time: new Date(),
+            }));
         }, 200);
     }
 

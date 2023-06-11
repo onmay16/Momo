@@ -10,6 +10,7 @@ const initialState = {
   numberOfCompleteRoutines: 0,
   pointSumOfReaminingRoutines: 0,
   pointSumOfCompleteRoutines: 0,
+  recentActionStartTime: null,
 };
 
 export const fetchUserRoutine = createAsyncThunk(
@@ -52,6 +53,7 @@ function routineSerializer(payload) {
       streak: parseInt(streak),
       activeDay: activeDay,
       isActiveToday: isActiveToday,
+      executionTime: 0,
     };
     userRoutineActionList.push(routineObj);
   }
@@ -103,6 +105,9 @@ export const userRoutineSlice = createSlice({
         newArray[index].streak += 1;
         state.numberOfReaminingRoutines -= 1;
         state.numberOfCompleteRoutines += 1;
+        const currentTime = new Date();
+        newArray[index].executionTime = Math.round((Date.parse(currentTime) - Date.parse(state.recentActionStartTime)) / 1000 / 60);
+        state.recentActionStartTime = new Date();
       } else if (newArray[index].streak > 0) {
         state.pointSumOfReaminingRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
         state.pointSumOfCompleteRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
@@ -137,6 +142,9 @@ export const userRoutineSlice = createSlice({
       const routineId = action.payload;
       state.userRoutineActionList = state.userRoutineActionList.filter(routine => routine.id !== routineId);
     },
+    setRecentActionStartTime: (state, action) => {
+      state.recentActionStartTime  = action.payload.time;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -162,5 +170,6 @@ export const userRoutineSlice = createSlice({
 export const {
   updateRoutineStatus,
   deleteRoutine,
+  setRecentActionStartTime,
 } = userRoutineSlice.actions;
 export default userRoutineSlice.reducer;
