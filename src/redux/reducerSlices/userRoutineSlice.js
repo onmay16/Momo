@@ -39,7 +39,7 @@ function routineSerializer(payload) {
     const binaryString = parseInt(fields.active_day.integerValue).toString(2).padStart(7, '0');
     activeDay = binaryString.split('').map((digit) => digit === '1');
     const today = new Date().getDay();
-    const isActiveToday = activeDay[(today + 7) % 8];
+    const isActiveToday = activeDay[((today + 7) % 8) - 1];
 
     const routineObj = {
       id: id,

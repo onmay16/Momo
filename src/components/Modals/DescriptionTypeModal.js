@@ -11,12 +11,10 @@ import { PretendardedText } from '../CustomComponent/PretendardedText';
 import OverTime from '../../assets/images/modals/overTime.svg';
 import PhotoVer from '../../assets/images/modals/photoVer.svg';
 import StartRoutine from '../../assets/images/modals/startRoutine.svg';
-import BreakRoutine from '../../assets/images/modals/breakRoutine.svg';
 
 export const DescriptionTypeModal = (props) => {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
-  const routineState = useSelector(state => state.userRoutineSlice);
 
   const overTimeModal = {
     title: '잠깐만요!',
@@ -34,15 +32,6 @@ export const DescriptionTypeModal = (props) => {
     description2: '',
     leftButtonText: '괜찮아요.',
     rightButtonText: '좋아요!',
-    hasCancel: true,
-  };
-  const routineBreakModal = {
-    title: '오늘의 루틴을 중단할까요?',
-    description1: '오늘 완료해야 할',
-    boldText: `${routineState.numberOfReaminingRoutines}개의 루틴과 ${routineState.pointSumOfReaminingRoutines}의 열정포인트`,
-    description2: '를 \n포기하게 됩니다.',
-    leftButtonText: '계속할게요',
-    rightButtonText: '그만할래요',
     hasCancel: true,
   };
 
@@ -63,11 +52,6 @@ export const DescriptionTypeModal = (props) => {
   useEffect(() => {
     if (props.type === 'overTimeModal') {
       setCurrentModalState(overTimeModal);
-      setDelayedTime(props.delayTime);
-    } else if (props.type === 'photoModal') {
-      setCurrentModalState(photoModal);
-    } else if (props.type === 'breakModal') {
-      setCurrentModalState(routineBreakModal);
     } else {
       setCurrentModalState(routineStartModal);
     }
@@ -91,7 +75,7 @@ export const DescriptionTypeModal = (props) => {
         <TouchableWithoutFeedback>
           <View style={modalStyles.modalView}>
             <PretendardedText style={modalStyles.title}>{currentModalState.title}</PretendardedText>
-            {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : (props.type === 'photoModal' ? <PhotoVer style={styles.image} /> : (props.type === 'breakModal' ? <BreakRoutine style={styles.image}/> : <StartRoutine style={styles.image}/>))}
+            {props.type === 'overTimeModal' ? <OverTime style={styles.image} /> : (props.type === 'photoModal' ? <PhotoVer style={styles.image} /> : <StartRoutine style={styles.image}/>)}
             <View>
               <Text style={styles.description}>{currentModalState.description1}</Text>
               <Text style={[styles.boldText, styles.description]}>
@@ -103,12 +87,12 @@ export const DescriptionTypeModal = (props) => {
               <Pressable
                 style={[modalStyles.button, customSytles(currentModalState.hasCancel).leftButton]}
                 onPress={closeModal}>
-                <PretendardedText style={customSytles(currentModalState.hasCancel, props.type === 'breakModal').leftButtonText}>{currentModalState.leftButtonText}</PretendardedText>
+                <PretendardedText style={customSytles(currentModalState.hasCancel).leftButtonText}>{currentModalState.leftButtonText}</PretendardedText>
               </Pressable>
               <Pressable
-                style={[modalStyles.button, customSytles(currentModalState.hasCancel, props.type === 'breakModal').rightButton]}
+                style={[modalStyles.button, customSytles(currentModalState.hasCancel).rightButton]}
                 onPress={props.rightButtonAction ? rightButtonActionFun : closeModal}>
-                <PretendardedText style={customSytles(currentModalState.hasCancel, props.type === 'breakModal').rightButtonText}>{currentModalState.rightButtonText}</PretendardedText>
+                <PretendardedText style={customSytles(currentModalState.hasCancel).rightButtonText}>{currentModalState.rightButtonText}</PretendardedText>
               </Pressable>
             </View>
           </View>
@@ -171,7 +155,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const customSytles = (hasCancel, isBreakModal) => StyleSheet.create({
+const customSytles = (hasCancel) => StyleSheet.create({
   leftButton: {
     backgroundColor: !hasCancel ? '#CAF4E6' : '#EEEEEE',
     borderBottomLeftRadius: 8,
@@ -179,15 +163,15 @@ const customSytles = (hasCancel, isBreakModal) => StyleSheet.create({
   leftButtonText: {
     fontWeight: '700',
     fontSize: 14,
-    color: !hasCancel ? '#595959' : (isBreakModal ? '#4C4C4C' : '#FF6056'),
+    color: !hasCancel ? '#595959' : '#FF6056',
   },
   rightButton: {
     borderBottomRightRadius: 8,
-    backgroundColor: isBreakModal ? '#FF6056' : '#3CE3AC',
+    backgroundColor: '#3CE3AC',
   },
   rightButtonText: {
     fontWeight: '700',
     fontSize: 14,
-    color: isBreakModal ? '#FFFFFF' : '#222222',
+    color: '#222222',
   },
 });
