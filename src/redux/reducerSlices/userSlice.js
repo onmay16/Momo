@@ -91,19 +91,7 @@ export const userSlice = createSlice({
       state.momoActivated = true;
     },
     updateExp: (state, action) => {
-      switch (action.payload.case) {
-        case 'INCREMENT_EXP':
-          state.exp += action.payload.amount;
-          break;
-        case 'DECREMENT_EXP':
-          state.exp -= action.payload.amount;
-          if (state.exp < 0) {
-            state.exp = 0;
-          }
-          break;
-        default:
-          state;
-      }
+      state.exp += action.payload.amount;
       state.level = updateLevel(state.exp);
       state.requiredPointToNextLevel = updateRequiredPointToNextLevel(
         state.level,
