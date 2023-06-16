@@ -27,16 +27,16 @@ const initialState = {
 
 const requiredPointDict = {
   // this is accumulative
-  1: 20,
-  2: 62,
-  3: 128,
-  4: 220,
-  5: 340,
-  6: 490,
-  7: 690,
-  8: 955,
-  9: 1330,
-  10: 1825,
+  1: 200,
+  2: 420,
+  3: 660,
+  4: 920,
+  5: 1200,
+  6: 1500,
+  7: 2000,
+  8: 2650,
+  9: 3750,
+  10: 4950,
 };
 
 function updateLevel(exp) {
