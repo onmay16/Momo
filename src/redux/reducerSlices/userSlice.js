@@ -8,7 +8,7 @@ const initialState = {
   isLoading: true,
   isApiLoading: false,
   error: null,
-  signedIn: false,
+  signedIn: true,
   momoActivated: false,
   streak: 0,
   level: 0,
@@ -162,6 +162,7 @@ export const userSlice = createSlice({
         state.isApiLoading = false;
         const data = action.payload.fields;
         state.momoActivated = (data.is_activated.stringValue === 'true');
+        state.streak = parseInt(data.streak.integerValue);
         state.exp = parseInt(data.momo_exp.integerValue);
         state.level = updateLevel(state.exp);
         state.requiredPointToNextLevel = updateRequiredPointToNextLevel(state.level);
