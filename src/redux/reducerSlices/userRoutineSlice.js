@@ -10,7 +10,6 @@ const initialState = {
   numberOfCompleteRoutines: 0,
   pointSumOfReaminingRoutines: 0,
   pointSumOfCompleteRoutines: 0,
-  recentActionStartTime: null,
 };
 
 export const fetchUserRoutine = createAsyncThunk(
@@ -95,7 +94,7 @@ export const userRoutineSlice = createSlice({
   initialState,
   reducers: {
     updateRoutineStatus: (state, action) => {
-      const index = state.userRoutineActionList.findIndex(routine => routine.id === action.payload);
+      const index = state.userRoutineActionList.findIndex(routine => routine.id === action.payload.id);
       const newArray = [...state.userRoutineActionList];
       state.pointSumOfReaminingRoutines -= (9 + newArray[index].streak) * newArray[index].difficulty;
       state.pointSumOfCompleteRoutines += (9 + newArray[index].streak) * newArray[index].difficulty;
@@ -103,19 +102,20 @@ export const userRoutineSlice = createSlice({
       newArray[index].streak += 1;
       state.numberOfReaminingRoutines -= 1;
       state.numberOfCompleteRoutines += 1;
-      const currentTime = new Date();
-      newArray[index].executionTime = Math.round((Date.parse(currentTime) - Date.parse(state.recentActionStartTime)) / 1000 / 60);
-      state.recentActionStartTime = new Date();
+      newArray[index].executionTime = action.payload.executionTime;
       newArray[index].complete = !newArray[index].complete;
 
       // update individual user routine's finished status & streak
-      const dataBody = {
+      let dataBody = {
         fields: {
           finished: {
             booleanValue: newArray[index].complete,
           },
           streak: {
             integerValue: newArray[index].streak,
+          },
+          execution_time: {
+            integerValue: newArray[index].executionTime,
           },
         },
       };
@@ -124,9 +124,6 @@ export const userRoutineSlice = createSlice({
     deleteRoutine: (state, action) => {
       const routineId = action.payload;
       state.userRoutineActionList = state.userRoutineActionList.filter(routine => routine.id !== routineId);
-    },
-    setRecentActionStartTime: (state, action) => {
-      state.recentActionStartTime = action.payload.time;
     },
   },
   extraReducers: (builder) => {
@@ -153,6 +150,5 @@ export const userRoutineSlice = createSlice({
 export const {
   updateRoutineStatus,
   deleteRoutine,
-  setRecentActionStartTime,
 } = userRoutineSlice.actions;
 export default userRoutineSlice.reducer;
