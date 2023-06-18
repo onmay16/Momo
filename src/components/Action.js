@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateRoutineStatus } from '../redux/reducerSlices/userRoutineSlice';
-import { updateExp } from '../redux/reducerSlices/userSlice';
+import { updateExp, setRecentActionStartTime } from '../redux/reducerSlices/userSlice';
 // import { setPhotoModalStatus } from '../redux/reducerSlices/modalSlice';
 
 import { PretendardedText } from './CustomComponent/PretendardedText';
@@ -14,9 +14,16 @@ import CompleteAction from '../assets/images/completeAction.svg';
 const Action = (props) => {
     const dispatch = useDispatch();
     const routineListState = useSelector(state => state.userRoutineSlice.userRoutineActionList);
+    const userState = useSelector(state => state.user);
     const routine = routineListState.find(r => r.id === props.id);
 
-    function handleCompleteStatus(action) {
+    function calculateExecutionTime() {
+        const currentTime = new Date();
+        const executionTime = Math.round((Date.parse(currentTime) - Date.parse(userState.recentActionStartTime)) / 1000 / 60);
+        return executionTime;
+    }
+
+    function handleCompleteStatus(id) {
         const amount = (9 + routine.streak) * routine.difficulty;
         if (!routine.complete) {
             dispatch(updateExp({ amount: amount }));
@@ -25,7 +32,15 @@ const Action = (props) => {
             // dispatch(setPhotoModalStatus({
             //     status: true,
             // }));
-            dispatch(updateRoutineStatus(action));
+            dispatch(updateRoutineStatus({
+                id: id,
+                executionTime: calculateExecutionTime(),
+            }));
+            let currentTime = new Date();
+            currentTime = currentTime.toISOString();
+            dispatch(setRecentActionStartTime({
+                time: currentTime,
+            }));
         }
     }
 

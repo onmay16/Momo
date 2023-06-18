@@ -23,6 +23,7 @@ const initialState = {
   isTutorialFinished: false,
   isRoutineFinished: false,
   isWakeUpStep: WakeUpStep.NONE,
+  recentActionStartTime: null,
 };
 
 const requiredPointDict = {
@@ -89,6 +90,14 @@ export const userSlice = createSlice({
     },
     activateMomo: (state) => {
       state.momoActivated = true;
+      const dataBody = {
+        fields: {
+          is_activated: {
+            stringValue: 'true',
+          },
+        },
+      };
+      patchUser(dataBody, ['is_activated']);
     },
     updateExp: (state, action) => {
       state.exp += action.payload.amount;
@@ -132,6 +141,17 @@ export const userSlice = createSlice({
     finishRoutine: (state) => {
       state.isRoutineFinished = true;
     },
+    setRecentActionStartTime: (state, action) => {
+      state.recentActionStartTime = action.payload.time;
+      const dataBody = {
+        fields: {
+          recentaction_start_time: {
+            timestampValue: state.recentActionStartTime,
+          },
+        },
+      };
+      patchUser(dataBody, ['recentaction_start_time']);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -141,6 +161,7 @@ export const userSlice = createSlice({
       .addCase(fetchUserBasic.fulfilled, (state, action) => {
         state.isApiLoading = false;
         const data = action.payload.fields;
+        state.momoActivated = (data.is_activated.stringValue === 'true');
         state.exp = parseInt(data.momo_exp.integerValue);
         state.level = updateLevel(state.exp);
         state.requiredPointToNextLevel = updateRequiredPointToNextLevel(state.level);
@@ -151,6 +172,7 @@ export const userSlice = createSlice({
         state.completeTime = new Date(data.routine_complete_time.timestampValue);
         state.wakeUpTime = data.wake_up_time.timestampValue;
         state.completeTime = data.routine_complete_time.timestampValue;
+        state.recentActionStartTime = data.recentaction_start_time.timestampValue;
         const completeTime = new Date(state.completeTime);
         const currentTime = new Date();
         currentTime.setFullYear(completeTime.getFullYear());
@@ -179,5 +201,6 @@ export const {
   setIsTutorialFinished,
   setIsWakeUpStep,
   finishRoutine,
+  setRecentActionStartTime,
 } = userSlice.actions;
 export default userSlice.reducer;
