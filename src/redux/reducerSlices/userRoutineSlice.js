@@ -39,7 +39,7 @@ function routineSerializer(payload) {
     const binaryString = parseInt(fields.active_day.integerValue).toString(2).padStart(7, '0');
     activeDay = binaryString.split('').map((digit) => digit === '1');
     const today = new Date().getDay();
-    const isActiveToday = activeDay[((today + 7) % 8) - 1];
+    const isActiveToday = activeDay[((today + 6) % 7)];
 
     const routineObj = {
       id: id,
@@ -134,6 +134,7 @@ export const userRoutineSlice = createSlice({
       .addCase(fetchUserRoutine.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userRoutineActionList = routineSerializer(action.payload);
+        alert(JSON.stringify(state.userRoutineActionList));
         state.remainingTime = calculateDuration(state.userRoutineActionList);
         state.numberOfReaminingRoutines = countRoutines(state.userRoutineActionList, 'complete', false);
         state.numberOfCompleteRoutines = countRoutines(state.userRoutineActionList, 'complete', true);
