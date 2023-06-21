@@ -134,7 +134,6 @@ export const userRoutineSlice = createSlice({
       .addCase(fetchUserRoutine.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userRoutineActionList = routineSerializer(action.payload);
-        alert(JSON.stringify(state.userRoutineActionList));
         state.remainingTime = calculateDuration(state.userRoutineActionList);
         state.numberOfReaminingRoutines = countRoutines(state.userRoutineActionList, 'complete', false);
         state.numberOfCompleteRoutines = countRoutines(state.userRoutineActionList, 'complete', true);
