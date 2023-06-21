@@ -119,7 +119,7 @@ export const userRoutineSlice = createSlice({
           },
         },
       };
-      patchIndividualUserRoutine(newArray[index].id, dataBody, ['finished', 'streak']);
+      patchIndividualUserRoutine(newArray[index].id, dataBody, ['finished', 'streak', 'execution_time']);
     },
     deleteRoutine: (state, action) => {
       const routineId = action.payload;
